@@ -55,7 +55,7 @@ export const AuthRoutes = ({ signInPath }) => {
         if(authUser.user !== null){
             return <Outlet />
         }else{
-            return <Navigate to={signInPath+"?re="+document.location.pathname+document.location.search} />
+            return <Navigate to={signInPath+"?re="+document.location.pathname+document.location.search+document.location.hash} />
         }
     }else{
         return <div>Loading...</div>
