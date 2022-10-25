@@ -37,7 +37,7 @@ export const AuthProvider = ({firebaseConfig, children}) => {
                  }));
             }
         });
-    },[]);
+    },[firebaseConfig]);
 
     return (
         <AuthContext.Provider value={{
