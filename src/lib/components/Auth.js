@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/auth";
@@ -8,21 +8,40 @@ export const AuthContext = React.createContext();
 
 export const AuthProvider = ({firebaseConfig, children}) => {
 
-    const firebaseApp = firebase.initializeApp(firebaseConfig);
-
     // authorized user state
     const [authUser, setAuthUser] = useState(
         {
-            'user': null,
-            'checked': false
+            user: null,
+            data: {},
+            checked: false
         }
     );
 
-    
+    useEffect(() => {
+        const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+        firebaseApp.auth().onAuthStateChanged((user) => {
+            if(user !== null){
+                user.getIdToken().then(token => {
+                    setAuthUser(prevState => ({
+                       ...prevState,
+                       user: user,
+                       checked: true
+                    }));
+                });
+            }else{
+                setAuthUser(prevState => ({
+                    ...prevState,
+                    user: null,
+                    checked: true
+                 }));
+            }
+        });
+    },[]);
 
     return (
         <AuthContext.Provider value={{
-            authUser, setAuthUser, firebaseApp
+            authUser, setAuthUser
         }}>
             {children}
         </AuthContext.Provider>
