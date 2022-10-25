@@ -47,7 +47,7 @@ export const AuthProvider = ({firebaseConfig, children}) => {
     )
 }
 
-export const AuthRoutes = () => {
+export const AuthRoutes = ({ signInPath }) => {
     const { authUser } = useContext(AuthContext);
 
     if(authUser.checked){
@@ -55,7 +55,7 @@ export const AuthRoutes = () => {
         if(authUser.user !== null){
             return <Outlet />
         }else{
-            return <div>sign-in</div>
+            return <Navigate to={signInPath+"?re="+document.location.pathname+document.location.search} />
         }
     }else{
         return <div>Loading...</div>
