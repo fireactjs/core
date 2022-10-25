@@ -1,4 +1,4 @@
-import { AuthContext, AuthProvider } from "./components/Auth";
+import { AuthContext, AuthProvider, AuthRoutes } from "./components/Auth";
 
 
-export {AuthContext, AuthProvider}
+export {AuthContext, AuthProvider, AuthRoutes}

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import firebase from "firebase/compat/app";
-import "firebase/compat/firestore";
 import "firebase/compat/auth";
-import "firebase/compat/functions";
+import { Navigate, Outlet } from "react-router-dom";
 
 export const AuthContext = React.createContext();
 
@@ -46,4 +45,19 @@ export const AuthProvider = ({firebaseConfig, children}) => {
             {children}
         </AuthContext.Provider>
     )
+}
+
+export const AuthRoutes = () => {
+    const { authUser } = useContext(AuthContext);
+
+    if(authUser.checked){
+        console.log(authUser);
+        if(authUser.user !== null){
+            return <Outlet />
+        }else{
+            return <div>sign-in</div>
+        }
+    }else{
+        return <div>Loading...</div>
+    }
 }
