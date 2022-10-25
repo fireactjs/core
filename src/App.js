@@ -11,7 +11,7 @@ function App() {
 			<Router>
 				<Routes>
 					<Route path="/sign-in" />
-					<Route path="/" element={<AuthRoutes signInPath="/sign-in" />} >
+					<Route element={<AuthRoutes signInPath="/sign-in" />} >
 						<Route path="/" element={<div>signed in</div>} />
 					</Route>
 				</Routes>
