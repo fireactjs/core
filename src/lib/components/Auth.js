@@ -16,9 +16,9 @@ export const AuthProvider = ({firebaseConfig, children}) => {
         }
     );
 
-    useEffect(() => {
-        const firebaseApp = firebase.initializeApp(firebaseConfig);
+    const firebaseApp = firebase.initializeApp(firebaseConfig);
 
+    useEffect(() => {
         firebaseApp.auth().onAuthStateChanged((user) => {
             if(user !== null){
                 user.getIdToken().then(token => {
@@ -36,11 +36,11 @@ export const AuthProvider = ({firebaseConfig, children}) => {
                  }));
             }
         });
-    },[firebaseConfig]);
+    },[firebaseConfig, firebaseApp]);
 
     return (
         <AuthContext.Provider value={{
-            authUser, setAuthUser
+            authUser, setAuthUser, firebaseApp
         }}>
             {children}
         </AuthContext.Provider>
