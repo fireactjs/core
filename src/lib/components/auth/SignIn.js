@@ -6,6 +6,8 @@ import microsoftSvg from "../../assets/images/microsoft.svg";
 import EmailIcon from '@mui/icons-material/Email';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import AppleIcon from '@mui/icons-material/Apple';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 export const SignIn = ({logo, providers}) => {
     const btWidth = "200px";
@@ -52,6 +54,20 @@ export const SignIn = ({logo, providers}) => {
                     <Button type="button" fullWidth variant="outlined" startIcon={<AppleIcon style={{color: "#555555"}} />} style={{marginBottom: `${btnMarginBottom}`}} size="large">
                         <Typography component="span" style={{width: `${btWidth}`}}>
                             Sign In With Apple
+                        </Typography>
+                    </Button>
+                }
+                {providers && providers.twitter && 
+                    <Button type="button" fullWidth variant="outlined" startIcon={<TwitterIcon style={{color: "#1DA1F2"}} />} style={{marginBottom: `${btnMarginBottom}`}} size="large">
+                        <Typography component="span" style={{width: `${btWidth}`}}>
+                            Sign In With Twitter
+                        </Typography>
+                    </Button>
+                }
+                {providers && providers.github && 
+                    <Button type="button" fullWidth variant="outlined" startIcon={<GitHubIcon style={{color: "#000000"}} />} style={{marginBottom: `${btnMarginBottom}`}} size="large">
+                        <Typography component="span" style={{width: `${btWidth}`}}>
+                            Sign In With Github
                         </Typography>
                     </Button>
                 }

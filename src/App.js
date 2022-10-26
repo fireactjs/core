@@ -16,7 +16,9 @@ function App() {
 		google: true,
 		facebook: true,
 		microsoft: true,
-		apple: true
+		apple: true,
+		twitter: true,
+		github: true
 	}
 
 	return (
