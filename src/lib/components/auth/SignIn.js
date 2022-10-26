@@ -16,7 +16,7 @@ export const SignIn = ({logo, providers}) => {
     const btWidth = "220px";
     const btnMarginBottom = "15px";
 
-    const { firebaseApp } = useContext(AuthContext);
+    const { setAuthUser } = useContext(AuthContext);
 
     const buttonClick = (providerName) => {
         let provider = null;
@@ -34,11 +34,13 @@ export const SignIn = ({logo, providers}) => {
         const auth = getAuth();
         signInWithPopup(auth, provider).then(result => {
             const user = result.user;
+            console.log(user);
             const credential = providerObj.credentialFromResult(result);
             const accessToken = credential.accessToken;
         }).catch(error => {
             const errorCode = error.code;
             const errorMessage = error.message;
+            console.log(errorMessage);
             const email = error.customData.email;
             const credential = providerObj.credentialFromError(error);
         })
