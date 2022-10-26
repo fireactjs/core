@@ -1,9 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
 import firebaseJson from "./firebase.json";
-import { AuthProvider, AuthRoutes, PublicTemplate } from './lib';
+import { AuthProvider, AuthRoutes, PublicTemplate, SignIn } from './lib';
 import { BrowserRouter, Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
+
+const Logo = ({size="64"}) => {
+	return (
+		<img src={logo} className="App-logo" alt="logo" width={size} />
+	)
+}
 
 function App() {
 	return (
@@ -14,7 +20,7 @@ function App() {
 						<Route path="/" element={<div>signed in</div>} />
 					</Route>
 					<Route element={<PublicTemplate />}>
-						<Route path="/sign-in" element={<div>sign in form</div>} />
+						<Route path="/sign-in" element={<SignIn logo={<Logo size={256} />} />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>
