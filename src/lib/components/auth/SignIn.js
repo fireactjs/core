@@ -10,7 +10,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
 
 export const SignIn = ({logo, providers}) => {
-    const btWidth = "200px";
+    const btWidth = "220px";
     const btnMarginBottom = "15px";
 
     return (
