@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 export const PublicTemplate = () => {
     return (
-        <Box m={10}>
+        <Box mt={10}>
             <Container maxWidth="sm">
                 <Box component="span" m={5} textAlign="center">
                     <Outlet />

@@ -1,17 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
 import firebaseJson from "./firebase.json";
 import { AuthProvider, AuthRoutes, PublicTemplate, SignIn } from './lib';
 import { BrowserRouter, Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 
-const Logo = ({size="64"}) => {
+const Logo = ({size}) => {
 	return (
-		<img src={logo} className="App-logo" alt="logo" width={size} />
+		<LocalFireDepartmentIcon color="warning" fontSize={size} />
 	)
 }
 
 function App() {
+	const ssoProviders = {
+		google: true,
+		facebook: true
+	}
+
 	return (
 		<AuthProvider firebaseConfig={firebaseJson.config}>
 			<BrowserRouter>
@@ -20,7 +25,12 @@ function App() {
 						<Route path="/" element={<div>signed in</div>} />
 					</Route>
 					<Route element={<PublicTemplate />}>
-						<Route path="/sign-in" element={<SignIn logo={<Logo size={256} />} />} />
+						<Route path="/sign-in" element={
+							<SignIn
+								logo={<Logo size="large" />}
+								providers={ssoProviders}
+							/>
+						} />
 					</Route>
 				</Routes>
 			</BrowserRouter>
