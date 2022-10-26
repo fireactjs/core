@@ -5,6 +5,7 @@ import googleSvg from "../../assets/images/google.svg";
 import microsoftSvg from "../../assets/images/microsoft.svg";
 import EmailIcon from '@mui/icons-material/Email';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import AppleIcon from '@mui/icons-material/Apple';
 
 export const SignIn = ({logo, providers}) => {
     const btWidth = "200px";
@@ -40,10 +41,17 @@ export const SignIn = ({logo, providers}) => {
                         </Typography>
                     </Button>
                 }
-                {providers && providers.facebook && 
+                {providers && providers.microsoft && 
                     <Button type="button" fullWidth variant="outlined" startIcon={<img src={microsoftSvg} width="16" alt="Microsoft" />} style={{marginBottom: `${btnMarginBottom}`}} size="large">
                         <Typography component="span" style={{width: `${btWidth}`}}>
                             Sign In With Microsoft
+                        </Typography>
+                    </Button>
+                }
+                {providers && providers.apple && 
+                    <Button type="button" fullWidth variant="outlined" startIcon={<AppleIcon style={{color: "#555555"}} />} style={{marginBottom: `${btnMarginBottom}`}} size="large">
+                        <Typography component="span" style={{width: `${btWidth}`}}>
+                            Sign In With Apple
                         </Typography>
                     </Button>
                 }

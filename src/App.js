@@ -14,7 +14,9 @@ const Logo = ({size}) => {
 function App() {
 	const ssoProviders = {
 		google: true,
-		facebook: true
+		facebook: true,
+		microsoft: true,
+		apple: true
 	}
 
 	return (
