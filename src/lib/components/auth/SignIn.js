@@ -1,6 +1,6 @@
 import { Button, Container, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useContext } from "react";
 import googleSvg from "../../assets/images/google.svg";
 import microsoftSvg from "../../assets/images/microsoft.svg";
 import EmailIcon from '@mui/icons-material/Email';
@@ -8,10 +8,41 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import AppleIcon from '@mui/icons-material/Apple';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import { AuthContext } from "../Auth";
+import { getAuth, signInWithPopup, FacebookAuthProvider, GoogleAuthProvider } from "firebase/auth";
+
 
 export const SignIn = ({logo, providers}) => {
     const btWidth = "220px";
     const btnMarginBottom = "15px";
+
+    const { firebaseApp } = useContext(AuthContext);
+
+    const buttonClick = (providerName) => {
+        let provider = null;
+        let providerObj = null;
+        switch(providerName){
+            case "google":
+                provider = new GoogleAuthProvider();
+                providerObj = GoogleAuthProvider;
+                break;
+            case "facebook":
+                provider = new FacebookAuthProvider();
+                providerObj = FacebookAuthProvider;
+                break;
+        }
+        const auth = getAuth();
+        signInWithPopup(auth, provider).then(result => {
+            const user = result.user;
+            const credential = providerObj.credentialFromResult(result);
+            const accessToken = credential.accessToken;
+        }).catch(error => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            const email = error.customData.email;
+            const credential = providerObj.credentialFromError(error);
+        })
+    }
 
     return (
         <Container component="main" maxWidth="s">
@@ -30,14 +61,14 @@ export const SignIn = ({logo, providers}) => {
                     <Typography p={2}>OR</Typography>
                 }
                 {providers && providers.google && 
-                    <Button type="button" fullWidth variant="outlined" startIcon={<img src={googleSvg} width="16" alt="Google" />} style={{marginBottom: `${btnMarginBottom}`}} size="large">
+                    <Button type="button" fullWidth variant="outlined" startIcon={<img src={googleSvg} width="16" alt="Google" />} style={{marginBottom: `${btnMarginBottom}`}} size="large" onClick={() => buttonClick("google")}>
                         <Typography component="span" style={{width: `${btWidth}`}}>
                             Sign In With Google
                         </Typography>
                     </Button>
                 }
                 {providers && providers.facebook && 
-                    <Button type="button" fullWidth variant="outlined" startIcon={<FacebookIcon style={{color: "#4267B2"}} />} style={{marginBottom: `${btnMarginBottom}`}} size="large">
+                    <Button type="button" fullWidth variant="outlined" startIcon={<FacebookIcon style={{color: "#4267B2"}} />} style={{marginBottom: `${btnMarginBottom}`}} size="large" onClick={() => buttonClick("facebook")}>
                         <Typography component="span" style={{width: `${btWidth}`}}>
                             Sign In With Facebook
                         </Typography>
