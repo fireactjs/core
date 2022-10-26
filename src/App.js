@@ -1,10 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import firebaseJson from "./firebase.json";
-import { AuthProvider, AuthRoutes } from './lib';
+import { AuthProvider, AuthRoutes, PublicTemplate } from './lib';
 import { BrowserRouter, Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
-import { PublicTemplate } from './lib/components/templates/PublicTemplate';
 
 function App() {
 	return (
