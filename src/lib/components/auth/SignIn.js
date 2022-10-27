@@ -1,4 +1,4 @@
-import { Alert, Button, Container, Stack, TextField, Typography } from "@mui/material";
+import { Alert, Button, Container, Grid, Stack, TextField, Typography, Link } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useContext, useState } from "react";
 import googleSvg from "../../assets/images/google.svg";
@@ -10,6 +10,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { AuthContext } from "../Auth";
 import { getAuth, signInWithPopup, fetchSignInMethodsForEmail, signInWithEmailAndPassword, FacebookAuthProvider, GoogleAuthProvider, GithubAuthProvider, OAuthProvider, TwitterAuthProvider } from "firebase/auth";
+import { Link as RouterLink } from "react-router-dom";
 
 
 const SignUp = ({logo, email, handleSuccess}) => {
@@ -48,7 +49,7 @@ const Password = ({logo, email, handleSuccess}) => {
     );
 }
 
-export const SignIn = ({logo, providers}) => {
+export const SignIn = ({logo, providers, successUrl, signUpUrl, resetPasswordUrl}) => {
     const btWidth = "220px";
 
     const { setAuthUser } = useContext(AuthContext);
@@ -56,7 +57,9 @@ export const SignIn = ({logo, providers}) => {
     const [error, setError] = useState(null);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [stage, setStage] = useState("sign-in");
+
+    const params = (new URL(document.location)).searchParams;
+    const re = params.get('re') || successUrl || "/"; // redirect to parameter "re", successUrl or homepage after sign in
 
     const singleSignOn = (providerName) => {
         setError(null);
@@ -96,7 +99,7 @@ export const SignIn = ({logo, providers}) => {
                     photoURL: user.photoURL
                 }
             }));
-            document.location.href = "/"; // redirect back to the homepage
+            document.location.href = re;
         }).catch(error => {
             if(error.code === 'auth/account-exists-with-different-credential'){
                 fetchSignInMethodsForEmail(auth, error.customData.email).then(methods => {
@@ -137,7 +140,7 @@ export const SignIn = ({logo, providers}) => {
                                     photoURL: user.photoURL
                                 }
                             }));
-                            document.location.href = "/"; // redirect back to the homepage
+                            document.location.href = re;
                         }).catch(error => {
                             switch(error.code){
                                 case "auth/invalid-email":
@@ -153,6 +156,9 @@ export const SignIn = ({logo, providers}) => {
                                 case "auth/wrong-password":
                                     setError("The password is invalid or the user does not have a password.");
                                     break;
+                                case "auth/user-not-found":
+                                    setError("There is no user record corresponding to this identifier. The user may have been deleted.");
+                                    break;
                                 default:
                                     setError(error.message);
                                     break;
@@ -163,6 +169,20 @@ export const SignIn = ({logo, providers}) => {
                             Sign In With Email
                         </Typography>
                     </Button>
+                    {(signUpUrl || resetPasswordUrl) && 
+                        <Grid container>
+                            {signUpUrl &&
+                                <Grid item xs textAlign="left">
+                                    <Link to={signUpUrl} component={RouterLink}>Sign up a new account</Link>
+                                </Grid>
+                            }
+                            {resetPasswordUrl && 
+                                <Grid item textAlign="left">
+                                    <Link to={resetPasswordUrl} component={RouterLink}>Reset password</Link>
+                                </Grid>
+                            }
+                        </Grid>
+                    }
                     {providers &&
                         <Typography>OR</Typography>
                     }

@@ -32,6 +32,8 @@ function App() {
 						<Route path="/sign-in" element={
 							<SignIn
 								logo={<Logo size="large" />}
+								signUpUrl="/sign-up"
+								resetPasswordUrl="/reset"
 								providers={ssoProviders}
 							/>
 						} />
