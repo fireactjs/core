@@ -9,7 +9,7 @@ import AppleIcon from '@mui/icons-material/Apple';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { AuthContext } from "../Auth";
-import { getAuth, signInWithPopup, fetchSignInMethodsForEmail, FacebookAuthProvider, GoogleAuthProvider, GithubAuthProvider, OAuthProvider, TwitterAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, fetchSignInMethodsForEmail, signInWithEmailAndPassword, FacebookAuthProvider, GoogleAuthProvider, GithubAuthProvider, OAuthProvider, TwitterAuthProvider } from "firebase/auth";
 
 
 const SignUp = ({logo, email, handleSuccess}) => {
@@ -55,6 +55,7 @@ export const SignIn = ({logo, providers}) => {
 
     const [error, setError] = useState(null);
     const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [stage, setStage] = useState("sign-in");
 
     const singleSignOn = (providerName) => {
@@ -112,92 +113,103 @@ export const SignIn = ({logo, providers}) => {
 
     return (
         <Container component="main" maxWidth="s">
-            {stage==="sign-in" && 
-                <>
-                    <Box>
-                        {logo}
-                        <Typography component="h1" variant="h5">Sign In</Typography>
-                    </Box>
-                    <Box>
-                        <Stack spacing={2} mt={2}>
-                            {error !== null &&
-                                <Alert severity="error">{error}</Alert>
-                            }
-                            <TextField required fullWidth name="email" label="Email Address" type="email" autoComplete="email" margin="normal" onChange={e => setEmail(e.target.value)} />
-                            <Button type="button" fullWidth variant="contained" size="large" startIcon={<EmailIcon />} onClick={() => {
-                                setError(null);
-                                const auth = getAuth();
-                                fetchSignInMethodsForEmail(auth, email).then(methods => {
-                                    if(methods.length === 0){
-                                        // non existing account
-                                        setStage("sign-up");
+            <Box>
+                {logo}
+                <Typography component="h1" variant="h5">Sign In</Typography>
+            </Box>
+            <Box>
+                <Stack spacing={2} mt={2}>
+                    {error !== null &&
+                        <Alert severity="error">{error}</Alert>
+                    }
+                    <TextField required fullWidth name="email" label="Email" type="email" autoComplete="email" margin="normal" onChange={e => setEmail(e.target.value)} />
+                    <TextField required fullWidth name="password" label="Password" type="password" autoComplete="current-password" margin="normal" onChange={e => setPassword(e.target.value)} />
+                    <Button type="button" fullWidth variant="contained" size="large" startIcon={<EmailIcon />} onClick={() => {
+                        setError(null);
+                        const auth = getAuth();
+                        signInWithEmailAndPassword(auth, email, password).then((result) => {
+                            const user = result.user;
+                            setAuthUser(prevState => ({
+                                ...prevState,
+                                user: {
+                                    email: user.email,
+                                    name: user.displayName,
+                                    photoURL: user.photoURL
+                                }
+                            }));
+                            document.location.href = "/"; // redirect back to the homepage
+                        }).catch(error => {
+                            switch(error.code){
+                                case "auth/invalid-email":
+                                    setError("The email address is badly formatted.");
+                                    break;
+                                case "auth/internal-error":
+                                    if(password === ""){
+                                        setError("The password is empty.");
                                     }else{
-                                        // existing account
-                                        setStage("password");
+                                        setError("An internal AuthError has occurred.");
                                     }
-                                }).catch(error => {
+                                    break;
+                                case "auth/wrong-password":
+                                    setError("The password is invalid or the user does not have a password.");
+                                    break;
+                                default:
                                     setError(error.message);
-                                });
-                            }}>
-                                <Typography component="span" style={{width: `${btWidth}`}}>
-                                    Sign In With Email
-                                </Typography>
-                            </Button>
-                            {providers &&
-                                <Typography>OR</Typography>
+                                    break;
                             }
-                            {providers && providers.google && 
-                                <Button type="button" fullWidth variant="outlined" startIcon={<img src={googleSvg} width="16" alt="Google" />} size="large" onClick={() => singleSignOn("google")}>
-                                    <Typography component="span" style={{width: `${btWidth}`}}>
-                                        Sign In With Google
-                                    </Typography>
-                                </Button>
-                            }
-                            {providers && providers.facebook && 
-                                <Button type="button" fullWidth variant="outlined" startIcon={<FacebookIcon style={{color: "#4267B2"}} />} size="large" onClick={() => singleSignOn("facebook")}>
-                                    <Typography component="span" style={{width: `${btWidth}`}}>
-                                        Sign In With Facebook
-                                    </Typography>
-                                </Button>
-                            }
-                            {providers && providers.microsoft && 
-                                <Button type="button" fullWidth variant="outlined" startIcon={<img src={microsoftSvg} width="16" alt="Microsoft" />} size="large" onClick={() => singleSignOn("microsoft")}>
-                                    <Typography component="span" style={{width: `${btWidth}`}}>
-                                        Sign In With Microsoft
-                                    </Typography>
-                                </Button>
-                            }
-                            {providers && providers.apple && 
-                                <Button type="button" fullWidth variant="outlined" startIcon={<AppleIcon style={{color: "#555555"}} />} size="large" onClick={() => singleSignOn("apple")}>
-                                    <Typography component="span" style={{width: `${btWidth}`}}>
-                                        Sign In With Apple
-                                    </Typography>
-                                </Button>
-                            }
-                            {providers && providers.twitter && 
-                                <Button type="button" fullWidth variant="outlined" startIcon={<TwitterIcon style={{color: "#1DA1F2"}} />} size="large" onClick={() => singleSignOn("twitter")}>
-                                    <Typography component="span" style={{width: `${btWidth}`}}>
-                                        Sign In With Twitter
-                                    </Typography>
-                                </Button>
-                            }
-                            {providers && providers.github && 
-                                <Button type="button" fullWidth variant="outlined" startIcon={<GitHubIcon style={{color: "#000000"}} />} size="large" onClick={() => singleSignOn("github")}>
-                                    <Typography component="span" style={{width: `${btWidth}`}}>
-                                        Sign In With Github
-                                    </Typography>
-                                </Button>
-                            }
-                        </Stack>
-                    </Box>
-                </>
-            }
-            {stage==="sign-up" && 
-                <SignUp logo={logo} email={email} handleSuccess={() => {setStage("sign-in")}} />
-            }
-            {stage==="password" && 
-                <Password logo={logo} email={email} handleSuccess={() => document.location.href="/"} />
-            }
+                        })
+                    }}>
+                        <Typography component="span" style={{width: `${btWidth}`}}>
+                            Sign In With Email
+                        </Typography>
+                    </Button>
+                    {providers &&
+                        <Typography>OR</Typography>
+                    }
+                    {providers && providers.google && 
+                        <Button type="button" fullWidth variant="outlined" startIcon={<img src={googleSvg} width="16" alt="Google" />} size="large" onClick={() => singleSignOn("google")}>
+                            <Typography component="span" style={{width: `${btWidth}`}}>
+                                Sign In With Google
+                            </Typography>
+                        </Button>
+                    }
+                    {providers && providers.facebook && 
+                        <Button type="button" fullWidth variant="outlined" startIcon={<FacebookIcon style={{color: "#4267B2"}} />} size="large" onClick={() => singleSignOn("facebook")}>
+                            <Typography component="span" style={{width: `${btWidth}`}}>
+                                Sign In With Facebook
+                            </Typography>
+                        </Button>
+                    }
+                    {providers && providers.microsoft && 
+                        <Button type="button" fullWidth variant="outlined" startIcon={<img src={microsoftSvg} width="16" alt="Microsoft" />} size="large" onClick={() => singleSignOn("microsoft")}>
+                            <Typography component="span" style={{width: `${btWidth}`}}>
+                                Sign In With Microsoft
+                            </Typography>
+                        </Button>
+                    }
+                    {providers && providers.apple && 
+                        <Button type="button" fullWidth variant="outlined" startIcon={<AppleIcon style={{color: "#555555"}} />} size="large" onClick={() => singleSignOn("apple")}>
+                            <Typography component="span" style={{width: `${btWidth}`}}>
+                                Sign In With Apple
+                            </Typography>
+                        </Button>
+                    }
+                    {providers && providers.twitter && 
+                        <Button type="button" fullWidth variant="outlined" startIcon={<TwitterIcon style={{color: "#1DA1F2"}} />} size="large" onClick={() => singleSignOn("twitter")}>
+                            <Typography component="span" style={{width: `${btWidth}`}}>
+                                Sign In With Twitter
+                            </Typography>
+                        </Button>
+                    }
+                    {providers && providers.github && 
+                        <Button type="button" fullWidth variant="outlined" startIcon={<GitHubIcon style={{color: "#000000"}} />} size="large" onClick={() => singleSignOn("github")}>
+                            <Typography component="span" style={{width: `${btWidth}`}}>
+                                Sign In With Github
+                            </Typography>
+                        </Button>
+                    }
+                </Stack>
+            </Box>
         </Container>
     );
 }
