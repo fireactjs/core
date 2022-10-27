@@ -9,7 +9,7 @@ import AppleIcon from '@mui/icons-material/Apple';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { AuthContext } from "../Auth";
-import { getAuth, signInWithPopup, FacebookAuthProvider, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, FacebookAuthProvider, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
 
 
 export const SignIn = ({logo, providers}) => {
@@ -30,6 +30,10 @@ export const SignIn = ({logo, providers}) => {
             case "facebook":
                 provider = new FacebookAuthProvider();
                 providerObj = FacebookAuthProvider;
+                break;
+            case "github":
+                provider = new GithubAuthProvider();
+                providerObj = GithubAuthProvider;
                 break;
         }
         const auth = getAuth();
@@ -110,7 +114,7 @@ export const SignIn = ({logo, providers}) => {
                         </Button>
                     }
                     {providers && providers.github && 
-                        <Button type="button" fullWidth variant="outlined" startIcon={<GitHubIcon style={{color: "#000000"}} />} size="large">
+                        <Button type="button" fullWidth variant="outlined" startIcon={<GitHubIcon style={{color: "#000000"}} />} size="large" onClick={() => buttonClick("github")}>
                             <Typography component="span" style={{width: `${btWidth}`}}>
                                 Sign In With Github
                             </Typography>
