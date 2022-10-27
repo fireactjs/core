@@ -34,9 +34,17 @@ export const SignIn = ({logo, providers}) => {
         const auth = getAuth();
         signInWithPopup(auth, provider).then(result => {
             const user = result.user;
-            console.log(user);
+            setAuthUser(prevState => ({
+                ...prevState,
+                user: {
+                    email: user.email,
+                    name: user.displayName,
+                    photoURL: user.photoURL
+                }
+            }));
             const credential = providerObj.credentialFromResult(result);
             const accessToken = credential.accessToken;
+            document.location.href = "/"; // redirect back to the homepage
         }).catch(error => {
             const errorCode = error.code;
             const errorMessage = error.message;
