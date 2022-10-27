@@ -9,7 +9,7 @@ import AppleIcon from '@mui/icons-material/Apple';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { AuthContext } from "../Auth";
-import { getAuth, signInWithPopup, FacebookAuthProvider, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, fetchSignInMethodsForEmail, FacebookAuthProvider, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
 
 
 export const SignIn = ({logo, providers}) => {
@@ -21,19 +21,17 @@ export const SignIn = ({logo, providers}) => {
 
     const buttonClick = (providerName) => {
         let provider = null;
-        let providerObj = null;
         switch(providerName){
             case "google":
                 provider = new GoogleAuthProvider();
-                providerObj = GoogleAuthProvider;
                 break;
             case "facebook":
                 provider = new FacebookAuthProvider();
-                providerObj = FacebookAuthProvider;
                 break;
             case "github":
                 provider = new GithubAuthProvider();
-                providerObj = GithubAuthProvider;
+                break;
+            default:
                 break;
         }
         const auth = getAuth();
@@ -50,7 +48,11 @@ export const SignIn = ({logo, providers}) => {
             document.location.href = "/"; // redirect back to the homepage
         }).catch(error => {
             if(error.code === 'auth/account-exists-with-different-credential'){
-                setError('Please use Google as your sign-in method.');
+                fetchSignInMethodsForEmail(auth, error.customData.email).then(methods => {
+                    setError("Please use another sign-in method: "+methods[0]);
+                }).catch(error => {
+                    setError(error.message);
+                })
             }else{
                 setError(error.message);
             }
