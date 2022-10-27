@@ -9,7 +9,7 @@ import AppleIcon from '@mui/icons-material/Apple';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { AuthContext } from "../Auth";
-import { getAuth, signInWithPopup, fetchSignInMethodsForEmail, FacebookAuthProvider, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, fetchSignInMethodsForEmail, FacebookAuthProvider, GoogleAuthProvider, GithubAuthProvider, OAuthProvider, TwitterAuthProvider } from "firebase/auth";
 
 
 export const SignIn = ({logo, providers}) => {
@@ -19,7 +19,7 @@ export const SignIn = ({logo, providers}) => {
 
     const [error, setError] = useState(null);
 
-    const buttonClick = (providerName) => {
+    const singleSignOn = (providerName) => {
         let provider = null;
         switch(providerName){
             case "google":
@@ -30,6 +30,17 @@ export const SignIn = ({logo, providers}) => {
                 break;
             case "github":
                 provider = new GithubAuthProvider();
+                break;
+            case "apple":
+                provider = new OAuthProvider('apple.com');
+                provider.addScope('email');
+                provider.addScope('name');
+                break;
+            case "microsoft":
+                provider = new OAuthProvider('microsoft.com');
+                break;
+            case "twitter":
+                provider = new TwitterAuthProvider();
                 break;
             default:
                 break;
@@ -81,42 +92,42 @@ export const SignIn = ({logo, providers}) => {
                         <Typography>OR</Typography>
                     }
                     {providers && providers.google && 
-                        <Button type="button" fullWidth variant="outlined" startIcon={<img src={googleSvg} width="16" alt="Google" />} size="large" onClick={() => buttonClick("google")}>
+                        <Button type="button" fullWidth variant="outlined" startIcon={<img src={googleSvg} width="16" alt="Google" />} size="large" onClick={() => singleSignOn("google")}>
                             <Typography component="span" style={{width: `${btWidth}`}}>
                                 Sign In With Google
                             </Typography>
                         </Button>
                     }
                     {providers && providers.facebook && 
-                        <Button type="button" fullWidth variant="outlined" startIcon={<FacebookIcon style={{color: "#4267B2"}} />} size="large" onClick={() => buttonClick("facebook")}>
+                        <Button type="button" fullWidth variant="outlined" startIcon={<FacebookIcon style={{color: "#4267B2"}} />} size="large" onClick={() => singleSignOn("facebook")}>
                             <Typography component="span" style={{width: `${btWidth}`}}>
                                 Sign In With Facebook
                             </Typography>
                         </Button>
                     }
                     {providers && providers.microsoft && 
-                        <Button type="button" fullWidth variant="outlined" startIcon={<img src={microsoftSvg} width="16" alt="Microsoft" />} size="large">
+                        <Button type="button" fullWidth variant="outlined" startIcon={<img src={microsoftSvg} width="16" alt="Microsoft" />} size="large" onClick={() => singleSignOn("microsoft")}>
                             <Typography component="span" style={{width: `${btWidth}`}}>
                                 Sign In With Microsoft
                             </Typography>
                         </Button>
                     }
                     {providers && providers.apple && 
-                        <Button type="button" fullWidth variant="outlined" startIcon={<AppleIcon style={{color: "#555555"}} />} size="large">
+                        <Button type="button" fullWidth variant="outlined" startIcon={<AppleIcon style={{color: "#555555"}} />} size="large" onClick={() => singleSignOn("apple")}>
                             <Typography component="span" style={{width: `${btWidth}`}}>
                                 Sign In With Apple
                             </Typography>
                         </Button>
                     }
                     {providers && providers.twitter && 
-                        <Button type="button" fullWidth variant="outlined" startIcon={<TwitterIcon style={{color: "#1DA1F2"}} />} size="large">
+                        <Button type="button" fullWidth variant="outlined" startIcon={<TwitterIcon style={{color: "#1DA1F2"}} />} size="large" onClick={() => singleSignOn("twitter")}>
                             <Typography component="span" style={{width: `${btWidth}`}}>
                                 Sign In With Twitter
                             </Typography>
                         </Button>
                     }
                     {providers && providers.github && 
-                        <Button type="button" fullWidth variant="outlined" startIcon={<GitHubIcon style={{color: "#000000"}} />} size="large" onClick={() => buttonClick("github")}>
+                        <Button type="button" fullWidth variant="outlined" startIcon={<GitHubIcon style={{color: "#000000"}} />} size="large" onClick={() => singleSignOn("github")}>
                             <Typography component="span" style={{width: `${btWidth}`}}>
                                 Sign In With Github
                             </Typography>
