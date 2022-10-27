@@ -12,43 +12,6 @@ import { AuthContext } from "../Auth";
 import { getAuth, signInWithPopup, fetchSignInMethodsForEmail, signInWithEmailAndPassword, FacebookAuthProvider, GoogleAuthProvider, GithubAuthProvider, OAuthProvider, TwitterAuthProvider } from "firebase/auth";
 import { Link as RouterLink } from "react-router-dom";
 
-
-const SignUp = ({logo, email, handleSuccess}) => {
-    return (
-        <>
-            <Box>
-                {logo}
-                <Typography component="h1" variant="h5">Sign Up</Typography>
-            </Box>
-            <Box>
-                <Stack spacing={2} mt={2}>
-                    <TextField required fullWidth name="fullname" label="Full Name" autoComplete="name" type="text" margin="normal" />
-                    <TextField required fullWidth name="password" label="New Password" autoComplete="new-password" type="password" margin="normal" />
-                    <TextField required fullWidth name="confirm-password" label="Confirm Password" autoComplete="new-password" type="password" margin="normal" />
-                    <Button type="button" fullWidth variant="contained" size="large" onClick={() => handleSuccess()}>Sign Up</Button>
-                </Stack>
-            </Box>
-        </>
-    );
-}
-
-const Password = ({logo, email, handleSuccess}) => {
-    return (
-        <>
-            <Box>
-                {logo}
-                <Typography component="h1" variant="h5">Enter Password</Typography>
-            </Box>
-            <Box>
-                <Stack spacing={2} mt={2}>
-                    <TextField required fullWidth name="password" label="Password" type="password" autoComplete="current-password" margin="normal" />
-                    <Button type="button" fullWidth variant="contained" size="large" onClick={() => handleSuccess()}>Sign In</Button>
-                </Stack>
-            </Box>
-        </>
-    );
-}
-
 export const SignIn = ({logo, providers, successUrl, signUpUrl, resetPasswordUrl}) => {
     const btWidth = "220px";
 
