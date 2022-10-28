@@ -1,11 +1,10 @@
 import './App.css';
 import firebaseJson from "./firebase.json";
-import { AppTemplate, AuthProvider, AuthRoutes, PublicTemplate, ResetPassword, SignIn, SignUp } from './lib';
+import { AppTemplate, AuthProvider, AuthRoutes, PublicTemplate, ResetPassword, SignIn, SignUp, UserMenu } from './lib';
 import { BrowserRouter, Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import { CircularProgress, Box } from '@mui/material';
-import { UserMenu } from './lib/components/menus/UserMenu';
 
 const Brand = "FIREACT";
 
