@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { styled, useTheme } from '@mui/material/styles';
-import { AppBar as MuiAppBar, Box, CssBaseline, Drawer as MuiDrawer, IconButton, Toolbar, Divider } from "@mui/material";
+import { AppBar as MuiAppBar, Box, CssBaseline, Drawer as MuiDrawer, IconButton, Toolbar, Divider, Typography } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -91,7 +91,6 @@ export const AppTemplate = ({logo, brand, drawerMenu, toolbarChildren, toolBarMe
             <CssBaseline />
             <AppBar position="fixed" open={open}>
                 <Toolbar>
-                    <div style={{paddingRight: '20px', display: open?"none":"inline-flex"}}>{logo}</div>
                     <IconButton
                     color="inherit"
                     aria-label="open drawer"
@@ -112,11 +111,11 @@ export const AppTemplate = ({logo, brand, drawerMenu, toolbarChildren, toolBarMe
             </AppBar>
             <Drawer variant="permanent" open={open}>
                 <DrawerHeader>
-                    {open && <div style={{marginLeft:'0px', marginRight:'auto', display:'inline-flex',alignItems: 'center', flexWrap: 'wrap',}}>
+                    {open && <div style={{marginLeft:'0px', marginRight:'auto', display:'inline-flex',alignItems: 'center', flexWrap: 'wrap'}}>
                         <div style={{display: 'inline-flex', paddingRight: '20px'}}>
                             {logo}
                         </div>
-                        <h2>{brand}</h2>
+                        <Typography variant="h6">{brand}</Typography>
                     </div>}
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
