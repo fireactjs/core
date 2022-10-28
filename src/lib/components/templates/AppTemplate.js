@@ -6,7 +6,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Outlet } from "react-router-dom";
 
-const drawerWidth = 250;
+const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,

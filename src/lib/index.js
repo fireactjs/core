@@ -5,12 +5,14 @@ import { SignUp } from "./components/auth/SignUp";
 import { ResetPassword } from "./components/auth/ResetPassword";
 import { AppTemplate } from "./components/templates/AppTemplate";
 import { UserMenu } from "./components/menus/UserMenu";
+import { MainMenu } from "./components/menus/MainMenu";
 
 export {
     AppTemplate,
     AuthContext,
     AuthProvider,
     AuthRoutes,
+    MainMenu,
     PublicTemplate,
     ResetPassword,
     SignIn,
