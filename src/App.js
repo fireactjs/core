@@ -6,6 +6,8 @@ import { Route } from "react-router-dom";
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import { CircularProgress, Box } from '@mui/material';
 
+const Brand = "FIREACT"
+
 const Logo = ({size, color}) => {
 	const logoColor = color || 'warning';
 	return (
@@ -54,7 +56,7 @@ function App() {
 			<BrowserRouter>
 				<Routes>
 					<Route element={<AuthRoutes signInPath="/sign-in" loader={<Loader size="large" />} />} >
-						<Route element={<AppTemplate logo={<Logo size="large" color="inherit" />} brand="FIREACT" />}>
+						<Route element={<AppTemplate logo={<Logo size="large" color="inherit" />} brand={Brand} />}>
 							<Route exact path="/" element={<></>} />
 						</Route>
 					</Route>
