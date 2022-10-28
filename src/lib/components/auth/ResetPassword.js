@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Alert, Button, Stack, TextField, Typography, Grid, Link } from "@mui/material";
-import { Box } from "@mui/system";
+import { Alert, Button, Box, Stack, TextField, Typography, Grid, Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 

@@ -2,8 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import { Navigate, Outlet } from "react-router-dom";
-import { Box } from "@mui/material";
-import { Container } from "@mui/system";
+import { Box, Container } from "@mui/material";
 
 export const AuthContext = React.createContext();
 

@@ -4,7 +4,7 @@ import { AuthProvider, AuthRoutes, PublicTemplate, ResetPassword, SignIn, SignUp
 import { BrowserRouter, Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
-import { CircularProgress, Box, Container } from '@mui/material';
+import { CircularProgress, Box } from '@mui/material';
 
 const Logo = ({size}) => {
 	return (
