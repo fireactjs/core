@@ -1,14 +1,15 @@
 import './App.css';
 import firebaseJson from "./firebase.json";
-import { AuthProvider, AuthRoutes, PublicTemplate, ResetPassword, SignIn, SignUp } from './lib';
+import { AppTemplate, AuthProvider, AuthRoutes, PublicTemplate, ResetPassword, SignIn, SignUp } from './lib';
 import { BrowserRouter, Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import { CircularProgress, Box } from '@mui/material';
 
-const Logo = ({size}) => {
+const Logo = ({size, color}) => {
+	const logoColor = color || 'warning';
 	return (
-		<LocalFireDepartmentIcon color="warning" fontSize={size} />
+		<LocalFireDepartmentIcon color={logoColor} fontSize={size} />
 	);
 }
 
@@ -53,7 +54,9 @@ function App() {
 			<BrowserRouter>
 				<Routes>
 					<Route element={<AuthRoutes signInPath="/sign-in" loader={<Loader size="large" />} />} >
-						<Route path="/" element={<></>} />
+						<Route element={<AppTemplate logo={<Logo size="large" color="inherit" />} brand="FIREACT" />}>
+							<Route exact path="/" element={<></>} />
+						</Route>
 					</Route>
 					<Route element={<PublicTemplate />}>
 						<Route path="/sign-in" element={
