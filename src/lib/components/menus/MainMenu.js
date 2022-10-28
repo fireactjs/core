@@ -10,7 +10,7 @@ export const MainMenu = ({profileUrl}) => {
             <NavLink to="/" style={{textDecoration:'none'}}>
                 <ListItemButton button key="home">
                     <ListItemIcon><HomeIcon /></ListItemIcon>
-                    <ListItemText primary={<Typography color="textPrimary">My Accounts</Typography>} />
+                    <ListItemText primary={<Typography color="textPrimary">Home</Typography>} />
                 </ListItemButton>
             </NavLink>
             {profileUrl && [
