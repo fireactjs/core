@@ -1,6 +1,6 @@
 import './App.css';
 import firebaseJson from "./firebase.json";
-import { AuthProvider, AuthRoutes, PublicTemplate, SignIn, SignUp } from './lib';
+import { AuthProvider, AuthRoutes, PublicTemplate, ResetPassword, SignIn, SignUp } from './lib';
 import { BrowserRouter, Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
@@ -33,7 +33,7 @@ function App() {
 							<SignIn
 								logo={<Logo size="large" />}
 								signUpUrl="/sign-up"
-								resetPasswordUrl="/reset"
+								resetPasswordUrl="/reset-password"
 								providers={ssoProviders}
 							/>
 						} />
@@ -41,7 +41,13 @@ function App() {
 							<SignUp
 								logo={<Logo size="large" signUpUrl="/" />}
 								signInUrl="/sign-in"
-								resetPasswordUrl="/reset"
+								resetPasswordUrl="/reset-password"
+							/>
+						} />
+						<Route path="/reset-password" element={
+							<ResetPassword
+								logo={<Logo size="large" signUpUrl="/" />}
+								signInUrl="/sign-in"
 							/>
 						} />
 					</Route>
