@@ -52,7 +52,6 @@ export const AuthRoutes = ({ signInPath, loader }) => {
     const { authUser } = useContext(AuthContext);
 
     if(authUser.checked){
-        console.log(authUser);
         if(authUser.user !== null){
             return <Outlet />
         }else{

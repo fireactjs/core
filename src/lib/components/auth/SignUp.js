@@ -46,7 +46,6 @@ export const SignUp = ({logo, successUrl, signInUrl, resetPasswordUrl}) => {
                         }else{;
                             const auth = getAuth();
                             createUserWithEmailAndPassword(auth, email, password).then(result => {
-                                console.log(result.user);
                                 return updateProfile(result.user, {displayName: fullname});
                             }).then(() => {
                                 document.location.href = re;
