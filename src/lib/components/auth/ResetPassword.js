@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Alert, Button, Box, Stack, TextField, Typography, Grid, Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { AuthContext } from "../Auth";
 
 export const ResetPassword = ({logo, signInUrl}) => {
+    const { setPageTitle } = useContext(AuthContext);
+    setPageTitle("Reset Password")
 
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);

@@ -14,7 +14,8 @@ import { Link as RouterLink } from "react-router-dom";
 export const SignIn = ({logo, providers, successUrl, signUpUrl, resetPasswordUrl}) => {
     const btWidth = "220px";
 
-    const { setAuthUser } = useContext(AuthContext);
+    const { setAuthUser, setPageTitle } = useContext(AuthContext);
+    setPageTitle("Sign In");
     const [processing, setProcessing] = useState(false);
     const [error, setError] = useState(null);
     const [email, setEmail] = useState("");

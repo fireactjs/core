@@ -6,7 +6,7 @@ import { Box, Container } from "@mui/material";
 
 export const AuthContext = React.createContext();
 
-export const AuthProvider = ({firebaseConfig, children}) => {
+export const AuthProvider = ({firebaseConfig, brand, children}) => {
 
     // authorized user state
     const [authUser, setAuthUser] = useState(
@@ -17,7 +17,19 @@ export const AuthProvider = ({firebaseConfig, children}) => {
         }
     );
 
+    // page title
+    const [pageTitle, setPageTitle] = useState("");
+
     const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+    useEffect(() => {
+        // set page title automatically when it's updated
+        if(pageTitle){
+            document.title = pageTitle + " - " + brand;
+        }else{
+            document.title = brand;
+        }
+    },[pageTitle, brand]);
 
     useEffect(() => {
         firebaseApp.auth().onAuthStateChanged((user) => {
@@ -41,7 +53,7 @@ export const AuthProvider = ({firebaseConfig, children}) => {
 
     return (
         <AuthContext.Provider value={{
-            authUser, setAuthUser, firebaseApp
+            authUser, setAuthUser, firebaseApp, brand, pageTitle, setPageTitle
         }}>
             {children}
         </AuthContext.Provider>

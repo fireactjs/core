@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Alert, Button, Box, Stack, TextField, Typography, Grid, Link } from "@mui/material";
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { Link as RouterLink } from "react-router-dom";
+import { AuthContext } from "../Auth";
 
 export const SignUp = ({logo, successUrl, signInUrl, resetPasswordUrl}) => {
+    const { setPageTitle } = useContext(AuthContext);
+    setPageTitle("Sign Up");
 
     const re = successUrl || "/"; // redirect successUrl or homepage after sign in
 
