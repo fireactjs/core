@@ -16,7 +16,7 @@ export const SignIn = ({logo, providers, successUrl, signUpUrl, resetPasswordUrl
     const btWidth = "220px";
 
     const { setAuthUser } = useContext(AuthContext);
-
+    const [processing, setProcessing] = useState(false);
     const [error, setError] = useState(null);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -25,6 +25,7 @@ export const SignIn = ({logo, providers, successUrl, signUpUrl, resetPasswordUrl
     const re = params.get('re') || successUrl || "/"; // redirect to parameter "re", successUrl or homepage after sign in
 
     const singleSignOn = (providerName) => {
+        setProcessing(true);
         setError(null);
         let provider = null;
         switch(providerName){
@@ -73,7 +74,7 @@ export const SignIn = ({logo, providers, successUrl, signUpUrl, resetPasswordUrl
             }else{
                 setError(error.message);
             }
-            
+            setProcessing(false);
         })
     }
 
@@ -90,8 +91,9 @@ export const SignIn = ({logo, providers, successUrl, signUpUrl, resetPasswordUrl
                     }
                     <TextField required fullWidth name="email" label="Email" type="email" autoComplete="email" margin="normal" onChange={e => setEmail(e.target.value)} />
                     <TextField required fullWidth name="password" label="Password" type="password" autoComplete="current-password" margin="normal" onChange={e => setPassword(e.target.value)} />
-                    <Button type="button" fullWidth variant="contained" size="large" startIcon={<EmailIcon />} onClick={() => {
+                    <Button type="button" fullWidth variant="contained" size="large" startIcon={<EmailIcon />} disabled={processing} onClick={() => {
                         setError(null);
+                        setProcessing(true);
                         const auth = getAuth();
                         signInWithEmailAndPassword(auth, email, password).then((result) => {
                             const user = result.user;
@@ -126,6 +128,7 @@ export const SignIn = ({logo, providers, successUrl, signUpUrl, resetPasswordUrl
                                     setError(error.message);
                                     break;
                             }
+                            setProcessing(false);
                         })
                     }}>
                         <Typography component="span" style={{width: `${btWidth}`}}>
@@ -150,42 +153,42 @@ export const SignIn = ({logo, providers, successUrl, signUpUrl, resetPasswordUrl
                         <Typography>OR</Typography>
                     }
                     {providers && providers.google && 
-                        <Button type="button" fullWidth variant="outlined" startIcon={<img src={googleSvg} width="16" alt="Google" />} size="large" onClick={() => singleSignOn("google")}>
+                        <Button type="button" fullWidth variant="outlined" startIcon={<img src={googleSvg} width="16" alt="Google" />} size="large" onClick={() => singleSignOn("google")} disabled={processing}>
                             <Typography component="span" style={{width: `${btWidth}`}}>
                                 Sign In With Google
                             </Typography>
                         </Button>
                     }
                     {providers && providers.facebook && 
-                        <Button type="button" fullWidth variant="outlined" startIcon={<FacebookIcon style={{color: "#4267B2"}} />} size="large" onClick={() => singleSignOn("facebook")}>
+                        <Button type="button" fullWidth variant="outlined" startIcon={<FacebookIcon style={{color: "#4267B2"}} />} size="large" onClick={() => singleSignOn("facebook")} disabled={processing}>
                             <Typography component="span" style={{width: `${btWidth}`}}>
                                 Sign In With Facebook
                             </Typography>
                         </Button>
                     }
                     {providers && providers.microsoft && 
-                        <Button type="button" fullWidth variant="outlined" startIcon={<img src={microsoftSvg} width="16" alt="Microsoft" />} size="large" onClick={() => singleSignOn("microsoft")}>
+                        <Button type="button" fullWidth variant="outlined" startIcon={<img src={microsoftSvg} width="16" alt="Microsoft" />} size="large" onClick={() => singleSignOn("microsoft")} disabled={processing}>
                             <Typography component="span" style={{width: `${btWidth}`}}>
                                 Sign In With Microsoft
                             </Typography>
                         </Button>
                     }
                     {providers && providers.apple && 
-                        <Button type="button" fullWidth variant="outlined" startIcon={<AppleIcon style={{color: "#555555"}} />} size="large" onClick={() => singleSignOn("apple")}>
+                        <Button type="button" fullWidth variant="outlined" startIcon={<AppleIcon style={{color: "#555555"}} />} size="large" onClick={() => singleSignOn("apple")} disabled={processing}>
                             <Typography component="span" style={{width: `${btWidth}`}}>
                                 Sign In With Apple
                             </Typography>
                         </Button>
                     }
                     {providers && providers.twitter && 
-                        <Button type="button" fullWidth variant="outlined" startIcon={<TwitterIcon style={{color: "#1DA1F2"}} />} size="large" onClick={() => singleSignOn("twitter")}>
+                        <Button type="button" fullWidth variant="outlined" startIcon={<TwitterIcon style={{color: "#1DA1F2"}} />} size="large" onClick={() => singleSignOn("twitter")} disabled={processing}>
                             <Typography component="span" style={{width: `${btWidth}`}}>
                                 Sign In With Twitter
                             </Typography>
                         </Button>
                     }
                     {providers && providers.github && 
-                        <Button type="button" fullWidth variant="outlined" startIcon={<GitHubIcon style={{color: "#000000"}} />} size="large" onClick={() => singleSignOn("github")}>
+                        <Button type="button" fullWidth variant="outlined" startIcon={<GitHubIcon style={{color: "#000000"}} />} size="large" onClick={() => singleSignOn("github")} disabled={processing}>
                             <Typography component="span" style={{width: `${btWidth}`}}>
                                 Sign In With Github
                             </Typography>
