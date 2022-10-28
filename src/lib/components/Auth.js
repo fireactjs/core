@@ -2,6 +2,8 @@ import React, { useEffect, useState, useContext } from "react";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import { Navigate, Outlet } from "react-router-dom";
+import { Box } from "@mui/material";
+import { Container } from "@mui/system";
 
 export const AuthContext = React.createContext();
 
@@ -47,7 +49,7 @@ export const AuthProvider = ({firebaseConfig, children}) => {
     )
 }
 
-export const AuthRoutes = ({ signInPath }) => {
+export const AuthRoutes = ({ signInPath, loader }) => {
     const { authUser } = useContext(AuthContext);
 
     if(authUser.checked){
@@ -58,6 +60,14 @@ export const AuthRoutes = ({ signInPath }) => {
             return <Navigate to={signInPath+"?re="+document.location.pathname+document.location.search+document.location.hash} />
         }
     }else{
-        return <div>Loading...</div>
+        return (
+            <Box mt={10}>
+                <Container maxWidth="sm">
+                    <Box component="span" m={5} textAlign="center">
+                        {loader}
+                    </Box>
+                </Container>
+            </Box>
+        )
     }
 }

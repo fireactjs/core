@@ -4,11 +4,38 @@ import { AuthProvider, AuthRoutes, PublicTemplate, ResetPassword, SignIn, SignUp
 import { BrowserRouter, Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+import { CircularProgress, Box, Container } from '@mui/material';
 
 const Logo = ({size}) => {
 	return (
 		<LocalFireDepartmentIcon color="warning" fontSize={size} />
-	)
+	);
+}
+
+const Loader = ({size}) => {
+	let cpSize = "35px";
+	switch(size){
+		case "small":
+			cpSize = "30px";
+			break;
+		case "medium":
+			cpSize = "35px";
+			break;
+		case "large":
+			cpSize = "45px";
+			break;
+		default:
+			cpSize = "35px";
+			break;
+	}
+	return (
+		<Box sx={{ display: 'flex', justifyContent: "center", alignItems: "center"}}>
+			<CircularProgress color="warning" size={cpSize} />
+			<div style={{position: "absolute" }}>
+				<Logo size={size} />
+			</div>
+		</Box>
+	);
 }
 
 function App() {
@@ -25,8 +52,8 @@ function App() {
 		<AuthProvider firebaseConfig={firebaseJson.config}>
 			<BrowserRouter>
 				<Routes>
-					<Route element={<AuthRoutes signInPath="/sign-in" />} >
-						<Route path="/" element={<div>signed in</div>} />
+					<Route element={<AuthRoutes signInPath="/sign-in" loader={<Loader size="large" />} />} >
+						<Route path="/" element={<></>} />
 					</Route>
 					<Route element={<PublicTemplate />}>
 						<Route path="/sign-in" element={
