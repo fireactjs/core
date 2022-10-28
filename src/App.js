@@ -39,7 +39,7 @@ function App() {
 						} />
 						<Route path="/sign-up" element={
 							<SignUp
-								logo={<Logo size="large" />}
+								logo={<Logo size="large" signUpUrl="/" />}
 							/>
 						} />
 					</Route>
