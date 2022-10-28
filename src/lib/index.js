@@ -6,6 +6,7 @@ import { ResetPassword } from "./components/auth/ResetPassword";
 import { AppTemplate } from "./components/templates/AppTemplate";
 import { UserMenu } from "./components/menus/UserMenu";
 import { MainMenu } from "./components/menus/MainMenu";
+import { UserProfile } from "./components/user/Profile";
 
 export {
     AppTemplate,
@@ -17,5 +18,6 @@ export {
     ResetPassword,
     SignIn,
     SignUp,
-    UserMenu
+    UserMenu,
+    UserProfile
 }

@@ -1,6 +1,6 @@
 import './App.css';
 import firebaseJson from "./firebase.json";
-import { AppTemplate, AuthProvider, AuthRoutes, MainMenu, PublicTemplate, ResetPassword, SignIn, SignUp, UserMenu } from './lib';
+import { AppTemplate, AuthProvider, AuthRoutes, MainMenu, PublicTemplate, ResetPassword, SignIn, SignUp, UserMenu, UserProfile } from './lib';
 import { BrowserRouter, Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
@@ -58,6 +58,7 @@ function App() {
 					<Route element={<AuthRoutes signInPath="/sign-in" loader={<Loader size="large" />} />} >
 						<Route element={<AppTemplate logo={<Logo size="large" />} brand={Brand} toolBarMenu={<UserMenu profileUrl="/user" />} drawerMenu={<MainMenu profileUrl="/user"  />} />}>
 							<Route exact path="/" element={<></>} />
+							<Route path="/user" element={<UserProfile />} />
 						</Route>
 					</Route>
 					<Route element={<PublicTemplate />}>
