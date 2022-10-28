@@ -40,6 +40,8 @@ function App() {
 						<Route path="/sign-up" element={
 							<SignUp
 								logo={<Logo size="large" signUpUrl="/" />}
+								signInUrl="/sign-in"
+								resetPasswordUrl="/reset"
 							/>
 						} />
 					</Route>

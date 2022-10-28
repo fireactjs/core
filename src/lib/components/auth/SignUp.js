@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Alert, Button, Stack, TextField, Typography } from "@mui/material";
+import { Alert, Button, Stack, TextField, Typography, Grid, Link } from "@mui/material";
 import { Box } from "@mui/system";
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { Link as RouterLink } from "react-router-dom";
 
-export const SignUp = ({logo, successUrl}) => {
+export const SignUp = ({logo, successUrl, signInUrl, resetPasswordUrl}) => {
 
     const re = successUrl || "/"; // redirect successUrl or homepage after sign in
 
@@ -64,6 +65,20 @@ export const SignUp = ({logo, successUrl}) => {
                             });
                         }
                     }}>Sign Up</Button>
+                    {(signInUrl || resetPasswordUrl) && 
+                        <Grid container>
+                            {signInUrl &&
+                                <Grid item xs textAlign="left">
+                                    <Link to={signInUrl} component={RouterLink}>Sign in with an existing account</Link>
+                                </Grid>
+                            }
+                            {resetPasswordUrl && 
+                                <Grid item textAlign="left">
+                                    <Link to={resetPasswordUrl} component={RouterLink}>Reset password</Link>
+                                </Grid>
+                            }
+                        </Grid>
+                    }
                 </Stack>
             </Box>
         </>
