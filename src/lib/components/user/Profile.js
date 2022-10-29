@@ -4,9 +4,11 @@ import { AuthContext } from "../Auth";
 import EditIcon from '@mui/icons-material/Edit';
 import SendIcon from '@mui/icons-material/Send';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
-
+import { useNavigate } from "react-router-dom";
 
 export const UserProfile = () => {
+    const navigate = useNavigate();
+
     return (
         <AuthContext.Consumer>
             {context => (
@@ -34,7 +36,9 @@ export const UserProfile = () => {
                         </Grid>
                     </ListItem>
                     <Divider />
-                    <ListItem button>
+                    <ListItem button onClick={() => {
+                        navigate("/user/update-email");
+                    }}>
                         <Grid container spacing={1}>
                             <Grid item xs>
                                 <Box p={1}><strong>EMAIL</strong><br />{context.authUser.user.email}</Box>

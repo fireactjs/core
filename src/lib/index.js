@@ -7,6 +7,7 @@ import { AppTemplate } from "./components/templates/AppTemplate";
 import { UserMenu } from "./components/menus/UserMenu";
 import { MainMenu } from "./components/menus/MainMenu";
 import { UserProfile } from "./components/user/Profile";
+import { UserUpdateEmail } from "./components/user/UserUpdateEmail";
 
 export {
     AppTemplate,
@@ -19,5 +20,6 @@ export {
     SignIn,
     SignUp,
     UserMenu,
-    UserProfile
+    UserProfile,
+    UserUpdateEmail
 }
