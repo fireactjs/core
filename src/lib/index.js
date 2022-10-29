@@ -8,8 +8,12 @@ import { UserMenu } from "./components/menus/UserMenu";
 import { MainMenu } from "./components/menus/MainMenu";
 import { UserProfile } from "./components/user/Profile";
 import { UserUpdateEmail } from "./components/user/UserUpdateEmail";
+import { SetPageTitle } from "./components/SetPageTitle";
+
+import pathnames from "./pathnames.json";
 
 export {
+    pathnames,
     AppTemplate,
     AuthContext,
     AuthProvider,
@@ -17,6 +21,7 @@ export {
     MainMenu,
     PublicTemplate,
     ResetPassword,
+    SetPageTitle,
     SignIn,
     SignUp,
     UserMenu,

@@ -10,12 +10,14 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import { AuthContext } from "../Auth";
 import { getAuth, signInWithPopup, fetchSignInMethodsForEmail, signInWithEmailAndPassword, FacebookAuthProvider, GoogleAuthProvider, GithubAuthProvider, OAuthProvider, TwitterAuthProvider } from "firebase/auth";
 import { Link as RouterLink } from "react-router-dom";
+import { SetPageTitle } from "../SetPageTitle";
 
 export const SignIn = ({logo, providers, successUrl, signUpUrl, resetPasswordUrl}) => {
     const btWidth = "220px";
+    const title = "Sign In";
 
-    const { setAuthUser, setPageTitle } = useContext(AuthContext);
-    setPageTitle("Sign In");
+    const { setAuthUser } = useContext(AuthContext);
+    
     const [processing, setProcessing] = useState(false);
     const [error, setError] = useState(null);
     const [email, setEmail] = useState("");
@@ -80,9 +82,10 @@ export const SignIn = ({logo, providers, successUrl, signUpUrl, resetPasswordUrl
 
     return (
         <Container component="main" maxWidth="s">
+            <SetPageTitle title={title} />
             <Box>
                 {logo}
-                <Typography component="h1" variant="h5">Sign In</Typography>
+                <Typography component="h1" variant="h5">{title}</Typography>
             </Box>
             <Box>
                 <Stack spacing={2} mt={2}>

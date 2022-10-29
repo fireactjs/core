@@ -1,12 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Alert, Button, Box, Stack, TextField, Typography, Grid, Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
-import { AuthContext } from "../Auth";
+import { SetPageTitle } from "../SetPageTitle";
 
-export const ResetPassword = ({logo, signInUrl}) => {
-    const { setPageTitle } = useContext(AuthContext);
-    setPageTitle("Reset Password")
+export const ResetPassword = ({logo, pathnames}) => {
+    const signInUrl = pathnames.SignIn;
+    const title = "Reset Password";
 
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
@@ -16,8 +16,9 @@ export const ResetPassword = ({logo, signInUrl}) => {
     return (
         <>
             <Box>
+                <SetPageTitle title={title} />
                 {logo}
-                <Typography component="h1" variant="h5">Reset Password</Typography>
+                <Typography component="h1" variant="h5">{title}</Typography>
             </Box>
             <Box>
                 <Stack spacing={2} mt={2}>

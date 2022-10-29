@@ -17,19 +17,7 @@ export const AuthProvider = ({firebaseConfig, brand, children}) => {
         }
     );
 
-    // page title
-    const [pageTitle, setPageTitle] = useState("");
-
     const firebaseApp = firebase.initializeApp(firebaseConfig);
-
-    useEffect(() => {
-        // set page title automatically when it's updated
-        if(pageTitle){
-            document.title = pageTitle + " - " + brand;
-        }else{
-            document.title = brand;
-        }
-    },[pageTitle, brand]);
 
     useEffect(() => {
         firebaseApp.auth().onAuthStateChanged((user) => {
@@ -53,7 +41,7 @@ export const AuthProvider = ({firebaseConfig, brand, children}) => {
 
     return (
         <AuthContext.Provider value={{
-            authUser, setAuthUser, firebaseApp, brand, pageTitle, setPageTitle
+            authUser, setAuthUser, firebaseApp, brand
         }}>
             {children}
         </AuthContext.Provider>

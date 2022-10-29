@@ -1,12 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Alert, Button, Box, Stack, TextField, Typography, Grid, Link } from "@mui/material";
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { Link as RouterLink } from "react-router-dom";
-import { AuthContext } from "../Auth";
+import { SetPageTitle } from "../SetPageTitle";
 
 export const SignUp = ({logo, successUrl, signInUrl, resetPasswordUrl}) => {
-    const { setPageTitle } = useContext(AuthContext);
-    setPageTitle("Sign Up");
+    const title = "Sign Up";
 
     const re = successUrl || "/"; // redirect successUrl or homepage after sign in
 
@@ -19,8 +18,9 @@ export const SignUp = ({logo, successUrl, signInUrl, resetPasswordUrl}) => {
     return (
         <>
             <Box>
+                <SetPageTitle title={title} />
                 {logo}
-                <Typography component="h1" variant="h5">Sign Up</Typography>
+                <Typography component="h1" variant="h5">{title}</Typography>
             </Box>
             <Box>
                 <Stack spacing={2} mt={2}>
