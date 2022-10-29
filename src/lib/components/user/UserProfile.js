@@ -64,7 +64,9 @@ export const UserProfile = ({pathnames}) => {
                                 </Grid>
                             </ListItem>
                             <Divider />
-                            <ListItem button>
+                            <ListItem button onClick={() => {
+                                navigate(pathnames.UserUpdatePassword);
+                            }}>
                                 <Grid container spacing={1}>
                                     <Grid item xs>
                                         <Box p={1}><strong>PASSWORD</strong><br />••••••••</Box>

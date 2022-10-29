@@ -4,5 +4,6 @@
     "SignUp": "/sign-up",
     "UserProfile": "/user",
     "UserUpdateEmail": "/user/update-email",
-    "UserUpdateName": "/user/update-name"
+    "UserUpdateName": "/user/update-name",
+    "UserUpdatePassword": "/user/update-password"
 }

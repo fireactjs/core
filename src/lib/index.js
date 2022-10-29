@@ -9,6 +9,7 @@ import { MainMenu } from "./components/menus/MainMenu";
 import { UserProfile } from "./components/user/UserProfile";
 import { UserUpdateEmail } from "./components/user/UserUpdateEmail";
 import { UserUpdateName } from "./components/user/UserUpdateName";
+import { UserUpdatePassword } from "./components/user/UserUpdatePassword";
 import { SetPageTitle } from "./components/SetPageTitle";
 
 import pathnames from "./pathnames.json";
@@ -28,5 +29,6 @@ export {
     UserMenu,
     UserProfile,
     UserUpdateEmail,
-    UserUpdateName
+    UserUpdateName,
+    UserUpdatePassword
 }
