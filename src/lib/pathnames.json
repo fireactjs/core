@@ -1,5 +1,7 @@
 {
     "ResetPassword": "/reset-password",
     "SignIn": "/sign-in",
-    "SignUp": "/sign-up"
+    "SignUp": "/sign-up",
+    "UserProfile": "/user",
+    "UserUpdateEmail": "/user/update-email"
 }

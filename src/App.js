@@ -58,8 +58,8 @@ function App() {
 					<Route element={<AuthRoutes signInPath="/sign-in" loader={<Loader size="large" />} />} >
 						<Route element={<AppTemplate logo={<Logo size="large" />} brand={Brand} toolBarMenu={<UserMenu profileUrl="/user" />} drawerMenu={<MainMenu profileUrl="/user"  />} />}>
 							<Route exact path="/" element={<></>} />
-							<Route exact path="/user" element={<UserProfile />} />
-							<Route exact path="/user/update-email" element={<UserUpdateEmail />} />
+							<Route exact path={pathnames.UserProfile} element={<UserProfile pathnames={pathnames} />} />
+							<Route exact path={pathnames.UserUpdateEmail} element={<UserUpdateEmail pathnames={pathnames} />} />
 						</Route>
 					</Route>
 					<Route element={<PublicTemplate />}>

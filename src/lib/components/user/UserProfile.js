@@ -6,7 +6,7 @@ import SendIcon from '@mui/icons-material/Send';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import { useNavigate } from "react-router-dom";
 
-export const UserProfile = () => {
+export const UserProfile = ({pathnames}) => {
     const navigate = useNavigate();
 
     return (
@@ -39,7 +39,7 @@ export const UserProfile = () => {
                             </ListItem>
                             <Divider />
                             <ListItem button onClick={() => {
-                                navigate("/user/update-email");
+                                navigate(pathnames.UserUpdateEmail);
                             }}>
                                 <Grid container spacing={1}>
                                     <Grid item xs>

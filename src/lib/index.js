@@ -6,7 +6,7 @@ import { ResetPassword } from "./components/auth/ResetPassword";
 import { AppTemplate } from "./components/templates/AppTemplate";
 import { UserMenu } from "./components/menus/UserMenu";
 import { MainMenu } from "./components/menus/MainMenu";
-import { UserProfile } from "./components/user/Profile";
+import { UserProfile } from "./components/user/UserProfile";
 import { UserUpdateEmail } from "./components/user/UserUpdateEmail";
 import { SetPageTitle } from "./components/SetPageTitle";
 
