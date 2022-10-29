@@ -7,7 +7,8 @@ import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 
-export const UserMenu = ({profileUrl, customItems}) => {
+export const UserMenu = ({pathnames, customItems}) => {
+    const profileUrl = pathnames.UserProfile;
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleMenu = (event) => {

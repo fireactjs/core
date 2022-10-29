@@ -56,7 +56,7 @@ function App() {
 			<BrowserRouter>
 				<Routes>
 					<Route element={<AuthRoutes signInPath="/sign-in" loader={<Loader size="large" />} />} >
-						<Route element={<AppTemplate logo={<Logo size="large" />} brand={Brand} toolBarMenu={<UserMenu profileUrl="/user" />} drawerMenu={<MainMenu profileUrl="/user"  />} />}>
+						<Route element={<AppTemplate logo={<Logo size="large" />} brand={Brand} toolBarMenu={<UserMenu pathnames={pathnames} />} drawerMenu={<MainMenu pathnames={pathnames}  />} />}>
 							<Route exact path="/" element={<></>} />
 							<Route exact path={pathnames.UserProfile} element={<UserProfile pathnames={pathnames} />} />
 							<Route exact path={pathnames.UserUpdateEmail} element={<UserUpdateEmail pathnames={pathnames} />} />
