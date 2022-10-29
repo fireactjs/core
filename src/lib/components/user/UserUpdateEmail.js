@@ -9,7 +9,7 @@ export const UserUpdateEmail = ({pathnames}) => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
     const [processing, setProcessing] = useState(false);
-    const title = "Update Email";
+    const title = "Change Email";
     const navigate = useNavigate();
 
     const auth = getAuth();
