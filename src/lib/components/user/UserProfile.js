@@ -27,7 +27,9 @@ export const UserProfile = ({pathnames}) => {
                                 </Grid>
                             </ListItem>
                             <Divider />
-                            <ListItem button>
+                            <ListItem button onClick={() => {
+                                navigate(pathnames.UserUpdateName);
+                            }}>
                                 <Grid container spacing={1}>
                                     <Grid item xs>
                                         <Box p={1}><strong>NAME</strong><br />{context.authUser.user.displayName}</Box>

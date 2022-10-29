@@ -3,5 +3,6 @@
     "SignIn": "/sign-in",
     "SignUp": "/sign-up",
     "UserProfile": "/user",
-    "UserUpdateEmail": "/user/update-email"
+    "UserUpdateEmail": "/user/update-email",
+    "UserUpdateName": "/user/update-name"
 }
