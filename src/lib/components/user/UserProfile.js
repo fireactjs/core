@@ -1,19 +1,37 @@
-import { Grid, List, ListItem, Box, Avatar, Typography, Divider, Paper, Container } from "@mui/material";
-import React from "react";
+import { Alert, Grid, List, ListItem, Box, Avatar, Typography, Divider, Paper, Container } from "@mui/material";
+import React, { useState } from "react";
 import { AuthContext } from "../Auth";
 import EditIcon from '@mui/icons-material/Edit';
 import SendIcon from '@mui/icons-material/Send';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import { useNavigate } from "react-router-dom";
+import { SetPageTitle } from "../SetPageTitle";
+import { getAuth, sendEmailVerification } from "firebase/auth";
 
 export const UserProfile = ({pathnames}) => {
     const navigate = useNavigate();
+    const auth = getAuth();
+    const [sendVerification, setSendVerification] = useState({
+        'success': false,
+        'error': null
+    })
 
     return (
         <AuthContext.Consumer>
             {context => (
                 <Container maxWidth="md">
+                    <SetPageTitle title="User Profile" />
                     <Paper>
+                        {sendVerification.error !== null &&
+                            <Box p={2}>
+                                <Alert severity="error">{sendVerification.error}</Alert>
+                            </Box>
+                        }
+                        {sendVerification.success &&
+                            <Box p={2}>
+                                <Alert severity="success">Please check your email inbox to verify the email address. Refresh this page after you verified your email address.</Alert>
+                            </Box>
+                        }
                         <List component={"nav"}>
                             <ListItem>
                                 <Grid container spacing={1}>
@@ -53,7 +71,35 @@ export const UserProfile = ({pathnames}) => {
                                 </Grid>
                             </ListItem>
                             <Divider />
-                            <ListItem button>
+                            <ListItem button onClick={() => {
+                                if(!context.authUser.user.emailVerified){
+                                    setSendVerification({
+                                        'success': false,
+                                        'error': null
+                                    });
+                                    sendEmailVerification(auth.currentUser).then(() => {
+                                        setSendVerification({
+                                            'success': true,
+                                            'error': null
+                                        });
+                                    }).catch(error => {
+                                        switch(error.code){
+                                            case "auth/too-many-requests":
+                                                setSendVerification({
+                                                    'success': false,
+                                                    'error': "We have blocked all requests from this device due to unusual activity. Try again later."
+                                                });
+                                               break;
+                                            default:
+                                                setSendVerification({
+                                                    'success': false,
+                                                    'error': error.message
+                                                });
+                                                break;
+                                        }
+                                    });
+                                }
+                            }}>
                                 <Grid container spacing={1}>
                                     <Grid item xs>
                                         <Box p={1}><strong>EMAIL VERIFIED</strong><br />{(context.authUser.user.emailVerified?" Verified":"Unverified email")}</Box>
