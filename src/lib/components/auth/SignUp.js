@@ -4,8 +4,10 @@ import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase
 import { Link as RouterLink } from "react-router-dom";
 import { SetPageTitle } from "../SetPageTitle";
 
-export const SignUp = ({logo, successUrl, signInUrl, resetPasswordUrl}) => {
+export const SignUp = ({logo, successUrl, pathnames}) => {
     const title = "Sign Up";
+    const signInUrl = pathnames.SignIn;
+    const resetPasswordUrl = pathnames.ResetPassword;
 
     const re = successUrl || "/"; // redirect successUrl or homepage after sign in
 

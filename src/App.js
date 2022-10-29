@@ -66,16 +66,14 @@ function App() {
 						<Route path="/sign-in" element={
 							<SignIn
 								logo={<Logo size="large" />}
-								signUpUrl="/sign-up"
-								resetPasswordUrl="/reset-password"
+								pathnames={pathnames}
 								providers={ssoProviders}
 							/>
 						} />
 						<Route path="/sign-up" element={
 							<SignUp
 								logo={<Logo size="large" signUpUrl="/" />}
-								signInUrl="/sign-in"
-								resetPasswordUrl="/reset-password"
+								pathnames={pathnames}
 							/>
 						} />
 						<Route path="/reset-password" element={

@@ -12,7 +12,10 @@ import { getAuth, signInWithPopup, fetchSignInMethodsForEmail, signInWithEmailAn
 import { Link as RouterLink } from "react-router-dom";
 import { SetPageTitle } from "../SetPageTitle";
 
-export const SignIn = ({logo, providers, successUrl, signUpUrl, resetPasswordUrl}) => {
+export const SignIn = ({logo, providers, pathnames, successUrl}) => {
+    const signUpUrl = pathnames.SignUp;
+    const resetPasswordUrl = pathnames.ResetPassword;
+
     const btWidth = "220px";
     const title = "Sign In";
 
