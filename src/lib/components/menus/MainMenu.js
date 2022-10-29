@@ -7,16 +7,16 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 export const MainMenu = ({profileUrl}) => {
     return (
         <List component="nav">
-            <NavLink to="/" style={{textDecoration:'none'}}>
-                <ListItemButton button key="home">
+            <NavLink to="/" style={{textDecoration:'none'}} key="home">
+                <ListItemButton>
                     <ListItemIcon><HomeIcon /></ListItemIcon>
                     <ListItemText primary={<Typography color="textPrimary">Home</Typography>} />
                 </ListItemButton>
             </NavLink>
             {profileUrl && [
-                <Divider />,
-                <NavLink to={profileUrl} style={{textDecoration:'none'}}>
-                    <ListItemButton button key="profile">
+                <Divider key="profile-divider"/>,
+                <NavLink to={profileUrl} style={{textDecoration:'none'}} key="profile">
+                    <ListItemButton>
                         <ListItemIcon><AccountBoxIcon /></ListItemIcon>
                         <ListItemText primary={<Typography color="textPrimary">My Profile</Typography>} />
                     </ListItemButton>
