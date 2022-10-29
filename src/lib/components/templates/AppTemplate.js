@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { styled, useTheme } from '@mui/material/styles';
-import { AppBar as MuiAppBar, Box, CssBaseline, Drawer as MuiDrawer, IconButton, Toolbar, Divider, Typography, Paper } from "@mui/material";
+import { AppBar as MuiAppBar, Box, CssBaseline, Drawer as MuiDrawer, IconButton, Toolbar, Divider, Typography } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -137,9 +137,7 @@ export const AppTemplate = ({logo, brand, drawerMenu, toolbarChildren, toolBarMe
                 <DrawerHeader />
                 <div style={{position: 'relative'}}>
                     <Box mt={5} ml={3} mr={3} mb={3}>
-                        <Paper>
-                            <Outlet />
-                        </Paper>
+                      <Outlet /> 
                     </Box>
                 </div>
             </Box>
