@@ -52,7 +52,7 @@ function App() {
 	}
 
 	return (
-		<AuthProvider firebaseConfig={firebaseJson.config} brand={Brand}>
+		<AuthProvider firebaseConfig={firebaseJson} brand={Brand}>
 			<BrowserRouter>
 				<Routes>
 					<Route element={<AuthRoutes signInPath="/sign-in" loader={<Loader size="large" />} />} >
