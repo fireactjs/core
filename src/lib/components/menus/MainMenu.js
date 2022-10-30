@@ -4,7 +4,8 @@ import { NavLink } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
-export const MainMenu = ({profileUrl}) => {
+export const MainMenu = ({pathnames}) => {
+    const profileUrl = pathnames.UserProfile;
     return (
         <List component="nav">
             <NavLink to="/" style={{textDecoration:'none'}} key="home">

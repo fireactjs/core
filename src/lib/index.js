@@ -1,4 +1,5 @@
 import { AuthContext, AuthProvider, AuthRoutes } from "./components/Auth";
+import { UserDelete } from "./components/user/UserDelete";
 import { PublicTemplate } from "./components/templates/PublicTemplate";
 import { SignIn } from "./components/auth/SignIn";
 import { SignUp } from "./components/auth/SignUp";
@@ -26,6 +27,7 @@ export {
     SetPageTitle,
     SignIn,
     SignUp,
+    UserDelete,
     UserMenu,
     UserProfile,
     UserUpdateEmail,

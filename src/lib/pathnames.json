@@ -2,6 +2,7 @@
     "ResetPassword": "/reset-password",
     "SignIn": "/sign-in",
     "SignUp": "/sign-up",
+    "UserDelete": "/user/delete",
     "UserProfile": "/user",
     "UserUpdateEmail": "/user/update-email",
     "UserUpdateName": "/user/update-name",

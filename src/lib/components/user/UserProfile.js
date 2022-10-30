@@ -123,7 +123,9 @@ export const UserProfile = ({pathnames}) => {
                                 </Grid>
                             </ListItem>
                             <Divider />
-                            <ListItem button>
+                            <ListItem button onClick={() => {
+                                navigate(pathnames.UserDelete);
+                            }}>
                                 <Grid container spacing={1}>
                                     <Grid container item xs={12} md={4}>
                                         <Box p={1}><Typography color="error"><strong>DELETE ACCOUNT</strong></Typography></Box>
