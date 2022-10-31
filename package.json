@@ -3,10 +3,21 @@
   "version": "0.1.0",
   "private": false,
   "author": "Chaoming Li",
-  "keywords": ["react", "components", "ui", "firebase", "authentication", "auth"],
+  "keywords": [
+    "react",
+    "components",
+    "ui",
+    "firebase",
+    "authentication",
+    "auth"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.js",
-  "files": [ "dist", "README.md", "LICENSE" ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "license": "ISC",
   "repository": {
     "type": "git",
@@ -56,5 +67,10 @@
     "@babel/cli": "^7.19.3",
     "@babel/core": "^7.19.6",
     "@babel/preset-env": "^7.19.4"
-  }
+  },
+  "description": "fireactjs-core is the core package for building web applications with Firebase and Reactjs in a simple and fast approach. Its key features include:",
+  "bugs": {
+    "url": "https://github.com/fireactjs/core/issues"
+  },
+  "homepage": "https://github.com/fireactjs/core#readme"
 }
