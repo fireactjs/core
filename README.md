@@ -96,7 +96,7 @@ service cloud.firestore {
 
 ## Modify App.js
 
-Replace the code in your `src/App.js` with the code below.
+Replace the code in your `src/App.js` with the code below. You can copy the code from [https://github.com/fireactjs/core-demo/blob/main/src/App.js](https://github.com/fireactjs/core-demo/blob/main/src/App.js)
 
 ```jsx
 import './App.css';
