@@ -1,7 +1,16 @@
 {
-  "name": "dev",
+  "name": "@fireactjs/core",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "author": "Chaoming Li",
+  "keywords": ["react", "components", "ui", "firebase", "authentication", "auth"],
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [ "dist", "README.md" ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fireactjs/core.git"
+  },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "@emotion/react": "^11.10.4",
