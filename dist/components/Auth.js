@@ -1,0 +1,101 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.AuthRoutes = exports.AuthProvider = exports.AuthContext = void 0;
+require("core-js/modules/web.dom-collections.iterator.js");
+require("core-js/modules/es.regexp.exec.js");
+require("core-js/modules/es.string.search.js");
+var _react = _interopRequireWildcard(require("react"));
+var _app = _interopRequireDefault(require("firebase/compat/app"));
+require("firebase/compat/auth");
+var _reactRouterDom = require("react-router-dom");
+var _material = require("@mui/material");
+var _firestore = require("firebase/firestore");
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+const AuthContext = /*#__PURE__*/_react.default.createContext();
+exports.AuthContext = AuthContext;
+const AuthProvider = _ref => {
+  let {
+    firebaseConfig,
+    brand,
+    children
+  } = _ref;
+  // authorized user state
+  const [authUser, setAuthUser] = (0, _react.useState)({
+    user: null,
+    data: {},
+    checked: false
+  });
+  const firebaseApp = _app.default.initializeApp(firebaseConfig);
+  (0, _react.useEffect)(() => {
+    firebaseApp.auth().onAuthStateChanged(user => {
+      if (user !== null) {
+        user.getIdToken().then(token => {
+          const db = (0, _firestore.getFirestore)(firebaseApp);
+          const userDoc = (0, _firestore.doc)(db, 'users', user.uid);
+          setAuthUser(prevState => _objectSpread(_objectSpread({}, prevState), {}, {
+            user: user,
+            checked: true
+          }));
+          (0, _firestore.setDoc)(userDoc, {
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+            email: user.email
+          }, {
+            merge: true
+          });
+        });
+      } else {
+        setAuthUser(prevState => _objectSpread(_objectSpread({}, prevState), {}, {
+          user: null,
+          checked: true
+        }));
+      }
+    });
+  }, [firebaseConfig, firebaseApp]);
+  return /*#__PURE__*/_react.default.createElement(AuthContext.Provider, {
+    value: {
+      authUser,
+      setAuthUser,
+      firebaseApp,
+      brand
+    }
+  }, children);
+};
+exports.AuthProvider = AuthProvider;
+const AuthRoutes = _ref2 => {
+  let {
+    signInPath,
+    loader
+  } = _ref2;
+  const {
+    authUser
+  } = (0, _react.useContext)(AuthContext);
+  if (authUser.checked) {
+    if (authUser.user !== null) {
+      return /*#__PURE__*/_react.default.createElement(_reactRouterDom.Outlet, null);
+    } else {
+      return /*#__PURE__*/_react.default.createElement(_reactRouterDom.Navigate, {
+        to: signInPath + "?re=" + document.location.pathname + document.location.search + document.location.hash
+      });
+    }
+  } else {
+    return /*#__PURE__*/_react.default.createElement(_material.Box, {
+      mt: 10
+    }, /*#__PURE__*/_react.default.createElement(_material.Container, {
+      maxWidth: "sm"
+    }, /*#__PURE__*/_react.default.createElement(_material.Box, {
+      component: "span",
+      m: 5,
+      textAlign: "center"
+    }, loader)));
+  }
+};
+exports.AuthRoutes = AuthRoutes;
