@@ -1,5 +1,5 @@
 import './App.css';
-import firebaseJson from "./firebase.json";
+import firebaseConfig from "./firebaseConfig.json";
 import { pathnames, AppTemplate, AuthProvider, AuthRoutes, MainMenu, PublicTemplate, ResetPassword, SignIn, SignUp, UserMenu, UserProfile, UserUpdateEmail, UserUpdateName, UserUpdatePassword, UserDelete } from './lib';
 import { BrowserRouter, Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
@@ -45,7 +45,7 @@ const Loader = ({size}) => {
 function App() {
 
 	return (
-		<AuthProvider firebaseConfig={firebaseJson} brand={Brand}>
+		<AuthProvider firebaseConfig={firebaseConfig} brand={Brand}>
 			<BrowserRouter>
 				<Routes>
 					<Route element={<AuthRoutes signInPath="/sign-in" loader={<Loader size="large" />} />} >
