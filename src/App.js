@@ -5,6 +5,7 @@ import { BrowserRouter, Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import { CircularProgress, Box } from '@mui/material';
+import authMethods from "./authMethods.json";
 
 const Brand = "FIREACT";
 
@@ -42,14 +43,6 @@ const Loader = ({size}) => {
 }
 
 function App() {
-	const ssoProviders = {
-		google: true,
-		facebook: true,
-		microsoft: true,
-		apple: true,
-		twitter: true,
-		github: true
-	}
 
 	return (
 		<AuthProvider firebaseConfig={firebaseJson} brand={Brand}>
@@ -70,7 +63,7 @@ function App() {
 							<SignIn
 								logo={<Logo size="large" />}
 								pathnames={pathnames}
-								providers={ssoProviders}
+								providers={authMethods}
 							/>
 						} />
 						<Route path="/sign-up" element={
