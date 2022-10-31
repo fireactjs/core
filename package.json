@@ -6,7 +6,7 @@
   "keywords": ["react", "components", "ui", "firebase", "authentication", "auth"],
   "main": "dist/index.js",
   "module": "dist/index.js",
-  "files": [ "dist", "README.md" ],
+  "files": [ "dist", "README.md", "LICENSE" ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fireactjs/core.git"
