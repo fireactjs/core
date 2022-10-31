@@ -19,7 +19,7 @@ To install the fireactjs-core components, create your Reactjs project first, and
 ```jsx
 npx create-react-app my-app
 cd my-app
-npm i @fireactjs/core
+npm i @fireactjs/core @mui/material @emotion/react @emotion/styled
 ```
 
 For details on how to create a Reactjs application, please see [https://reactjs.org/docs/create-a-new-react-app.html](https://reactjs.org/docs/create-a-new-react-app.html)
@@ -80,7 +80,7 @@ Run `firebase login` to sign in to your Firebase account and then run `firebase 
 
 Update your `firebase.rules` with the code below.
 
-```
+```json
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -99,7 +99,96 @@ service cloud.firestore {
 Replace the code in your `src/App.js` with the code below.
 
 ```jsx
+import './App.css';
+import firebaseConfig from "./firebaseConfig.json";
+import { pathnames, AppTemplate, AuthProvider, AuthRoutes, MainMenu, PublicTemplate, ResetPassword, SignIn, SignUp, UserMenu, UserProfile, UserUpdateEmail, UserUpdateName, UserUpdatePassword, UserDelete } from '@fireactjs/core';
+import { BrowserRouter, Routes } from "react-router-dom";
+import { Route } from "react-router-dom";
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+import { CircularProgress, Box } from '@mui/material';
+import authMethods from "./authMethods.json";
 
+// replace the Brand with your brand
+const Brand = "FIREACT";
+
+// replace the Logo component with your Logo component
+const Logo = ({size, color}) => {
+	const logoColor = color || 'warning';
+	return (
+		<LocalFireDepartmentIcon color={logoColor} fontSize={size} />
+	);
+}
+
+const Loader = ({size}) => {
+	let cpSize = "35px";
+	switch(size){
+		case "small":
+			cpSize = "30px";
+			break;
+		case "medium":
+			cpSize = "35px";
+			break;
+		case "large":
+			cpSize = "45px";
+			break;
+		default:
+			cpSize = "35px";
+			break;
+	}
+	return (
+		<Box sx={{ display: 'flex', justifyContent: "center", alignItems: "center"}}>
+			<CircularProgress color="warning" size={cpSize} />
+			<div style={{position: "absolute" }}>
+				<Logo size={size} />
+			</div>
+		</Box>
+	);
+}
+
+function App() {
+
+	return (
+		<AuthProvider firebaseConfig={firebaseConfig} brand={Brand}>
+			<BrowserRouter>
+				<Routes>
+					<Route element={<AuthRoutes signInPath="/sign-in" loader={<Loader size="large" />} />} >
+						<Route element={<AppTemplate logo={<Logo size="large" />} brand={Brand} toolBarMenu={<UserMenu pathnames={pathnames} />} drawerMenu={<MainMenu pathnames={pathnames}  />} />}>
+							<Route exact path="/" element={<></>} />
+							<Route exact path={pathnames.UserProfile} element={<UserProfile pathnames={pathnames} />} />
+							<Route exact path={pathnames.UserUpdateEmail} element={<UserUpdateEmail pathnames={pathnames} />} />
+							<Route exact path={pathnames.UserUpdateName} element={<UserUpdateName pathnames={pathnames} />} />
+							<Route exact path={pathnames.UserUpdatePassword} element={<UserUpdatePassword pathnames={pathnames} />} />
+							<Route exact path={pathnames.UserDelete} element={<UserDelete pathnames={pathnames} />} />
+						</Route>
+					</Route>
+					<Route element={<PublicTemplate />}>
+						<Route path="/sign-in" element={
+							<SignIn
+								logo={<Logo size="large" />}
+								pathnames={pathnames}
+								providers={authMethods}
+							/>
+						} />
+						<Route path="/sign-up" element={
+							<SignUp
+								logo={<Logo size="large" signUpUrl="/" />}
+								pathnames={pathnames}
+							/>
+						} />
+						<Route path="/reset-password" element={
+							<ResetPassword
+								logo={<Logo size="large" signUpUrl="/" />}
+								pathnames={pathnames}
+							/>
+						} />
+					</Route>
+				</Routes>
+			</BrowserRouter>
+		</AuthProvider>
+	)
+}
+
+export default App;
 ```
 
 Replace `Brand` and `Logo` to customise the logo and the brand of your web application.
@@ -120,4 +209,4 @@ Run `npm run build` to build your app
 
 ### Deploy
 
-Run `firebase deploy` to deploy your app to Firebase. If you see a blank screen in your production URL, make sure you set the `build` as the folder in your Firebase settings.
+Run `firebase init` to initialize your project with Firebase and then run `firebase deploy` to deploy your app to Firebase. If you see a blank screen in your production URL, make sure you set the `build` as the folder in your Firebase settings.
