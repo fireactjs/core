@@ -3,6 +3,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import { Navigate, Outlet } from "react-router-dom";
 import { Box, Container } from "@mui/material";
+import { doc, getFirestore, setDoc } from "firebase/firestore";
 
 export const AuthContext = React.createContext();
 
@@ -23,11 +24,18 @@ export const AuthProvider = ({firebaseConfig, brand, children}) => {
         firebaseApp.auth().onAuthStateChanged((user) => {
             if(user !== null){
                 user.getIdToken().then(token => {
+                    const db = getFirestore(firebaseApp);
+                    const userDoc = doc(db, 'users', user.uid);
                     setAuthUser(prevState => ({
-                       ...prevState,
-                       user: user,
-                       checked: true
-                    }));
+                        ...prevState,
+                        user: user,
+                        checked: true
+                     }));
+                    setDoc(userDoc, {
+                        displayName: user.displayName,
+                        photoURL: user.photoURL,
+                        email: user.email
+                    },{merge: true});
                 });
             }else{
                 setAuthUser(prevState => ({
