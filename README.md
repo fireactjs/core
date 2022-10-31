@@ -1,70 +1,123 @@
-# Getting Started with Create React App
+## What is fireactjs-core?
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+fireactjs-core is the core package for building web applications with Firebase and Reactjs in a simple and fast approach. Its key features include:
 
-## Available Scripts
+- Built-in Firebase authentication features for users to sign up and sign in
+- Built-in user profile features for users to change email, and password and delete user accounts
+- Template base design for easy customization
+- Component base architecture that supports full customization
+- Easy to extend additional features
 
-In the project directory, you can run:
+## Live demo
 
-### `npm start`
+To experience the package, go to [https://demo.fireactjs.com](https://demo.fireactjs.com)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Installation
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+To install the fireactjs-core components, create your Reactjs project first, and then run `npm I @fireactjs/core` to install the components.
 
-### `npm test`
+```jsx
+npx create-react-app my-app
+cd my-app
+npm i @fireactjs/core
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+For details on how to create a Reactjs application, please see [https://reactjs.org/docs/create-a-new-react-app.html](https://reactjs.org/docs/create-a-new-react-app.html)
 
-### `npm run build`
+## Setup your Firebase project
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+As @fireactjs/core is built on Firebase and Reactjs, you will need to have a Firebase project. Go to [the Firebase website](https://firebase.google.com/) and create a project.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Create a web app
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+In your Firebase Project settings → General, click the “Add app” button to create a new web app. You will the instructions on install the firebase npm package and a JSON configuration named `firebaseConfig` which you will need to configure your @fireactjs application.
 
-### `npm run eject`
+Create a file called `firebaseConfig.json` in the `/src` folder and copy the `firebaseConfig` JSON to the file similar to the format below.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```json
+{
+    "apiKey": "...",
+    "authDomain": "...",
+    "projectId": "...",
+    "storageBucket": "...",
+    "messagingSenderId": "...",
+    "appId": "..."
+}
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Enable authentication methods
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+After you create your Firebase project, go to the project console and enable the authentication methods you plan to use for your web application. @fireactjs/core supports the following authentication methods:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Email and password
+- Google
+- Facebook
+- Microsoft
+- Twitter
+- Github
+- Apple
 
-## Learn More
+Some of the authentication methods require you to register your web application in the authentication platforms (e.g. Facebook). Please make sure you complete the necessary steps to enable the authentication methods.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Create a file called `authMethods.json` in the `/src` folder and copy the following JSON to the file, then set the authentication methods that you enabled to `true` otherwise to `false`.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```json
+{
+		"google": true,
+		"facebook": true,
+		"microsoft": true,
+		"apple": true,
+		"twitter": true,
+		"github": true
+}
+```
 
-### Code Splitting
+### Initialize your Firebase project
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Run `firebase login` to sign in to your Firebase account and then run `firebase init` to initialize your Firebase project locally.
 
-### Analyzing the Bundle Size
+### Update Firestore rules
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Update your `firebase.rules` with the code below.
 
-### Making a Progressive Web App
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+    match /users/{userId} {
+      allow read, update, create: if request.auth.uid == userId;
+    }
+  }
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Modify App.js
 
-### Advanced Configuration
+Replace the code in your `src/App.js` with the code below.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```jsx
 
-### Deployment
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Replace `Brand` and `Logo` to customise the logo and the brand of your web application.
 
-### `npm run build` fails to minify
+For further customisation, please read the documentation.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Run your app locally
+
+By now, your app is ready for the first run locally. Use the command `npm start` to start the app.
+
+## Deploy to Firebase
+
+After testing locally, your app is ready to be deployed to Firebase hosting.
+
+### Build
+
+Run `npm run build` to build your app
+
+### Deploy
+
+Run `firebase deploy` to deploy your app to Firebase. If you see a blank screen in your production URL, make sure you set the `build` as the folder in your Firebase settings.
