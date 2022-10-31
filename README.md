@@ -63,12 +63,12 @@ Create a file called `authMethods.json` in the `/src` folder and copy the follow
 
 ```json
 {
-		"google": true,
-		"facebook": true,
-		"microsoft": true,
-		"apple": true,
-		"twitter": true,
-		"github": true
+	"google": true,
+	"facebook": true,
+	"microsoft": true,
+	"apple": true,
+	"twitter": true,
+	"github": true
 }
 ```
 
@@ -80,7 +80,7 @@ Run `firebase login` to sign in to your Firebase account and then run `firebase 
 
 Update your `firebase.rules` with the code below.
 
-```json
+```
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
