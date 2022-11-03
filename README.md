@@ -108,10 +108,8 @@ import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import { CircularProgress, Box } from '@mui/material';
 import authMethods from "./authMethods.json";
 
-// replace the Brand with your brand
 const Brand = "FIREACT";
 
-// replace the Logo component with your Logo component
 const Logo = ({size, color}) => {
 	const logoColor = color || 'warning';
 	return (
@@ -144,6 +142,8 @@ const Loader = ({size}) => {
 		</Box>
 	);
 }
+
+function App() {
 
 	return (
 		<AuthProvider firebaseConfig={firebaseConfig} brand={Brand}>
