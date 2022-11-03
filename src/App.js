@@ -68,13 +68,13 @@ function App() {
 						} />
 						<Route path={pathnames.SignUp} element={
 							<SignUp
-								logo={<Logo size="large" signUpUrl="/" />}
+								logo={<Logo size="large" />}
 								pathnames={pathnames}
 							/>
 						} />
 						<Route path={pathnames.ResetPassword} element={
 							<ResetPassword
-								logo={<Logo size="large" signUpUrl="/" />}
+								logo={<Logo size="large" />}
 								pathnames={pathnames}
 							/>
 						} />
