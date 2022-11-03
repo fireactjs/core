@@ -48,7 +48,7 @@ function App() {
 		<AuthProvider firebaseConfig={firebaseConfig} brand={Brand}>
 			<BrowserRouter>
 				<Routes>
-					<Route element={<AuthRoutes signInPath="/sign-in" loader={<Loader size="large" />} />} >
+					<Route element={<AuthRoutes signInPath={pathnames.SignIn} loader={<Loader size="large" />} />} >
 						<Route element={<AppTemplate logo={<Logo size="large" />} brand={Brand} toolBarMenu={<UserMenu pathnames={pathnames} />} drawerMenu={<MainMenu pathnames={pathnames}  />} />}>
 							<Route exact path="/" element={<></>} />
 							<Route exact path={pathnames.UserProfile} element={<UserProfile pathnames={pathnames} />} />
@@ -59,20 +59,20 @@ function App() {
 						</Route>
 					</Route>
 					<Route element={<PublicTemplate />}>
-						<Route path="/sign-in" element={
+						<Route path={pathnames.SignIn} element={
 							<SignIn
 								logo={<Logo size="large" />}
 								pathnames={pathnames}
 								providers={authMethods}
 							/>
 						} />
-						<Route path="/sign-up" element={
+						<Route path={pathnames.SignUp} element={
 							<SignUp
 								logo={<Logo size="large" signUpUrl="/" />}
 								pathnames={pathnames}
 							/>
 						} />
-						<Route path="/reset-password" element={
+						<Route path={pathnames.ResetPassword} element={
 							<ResetPassword
 								logo={<Logo size="large" signUpUrl="/" />}
 								pathnames={pathnames}
