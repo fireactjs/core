@@ -85,7 +85,7 @@ const SignIn = _ref => {
           photoURL: user.photoURL
         }
       }));
-      document.location.href = re;
+      document.location.href = re.substr(0, 1) === '/' && re.substr(1, 1) !== '/' ? re : '/';
     }).catch(error => {
       if (error.code === 'auth/account-exists-with-different-credential') {
         (0, _auth.fetchSignInMethodsForEmail)(auth, error.customData.email).then(methods => {
@@ -150,7 +150,7 @@ const SignIn = _ref => {
             photoURL: user.photoURL
           }
         }));
-        document.location.href = re;
+        document.location.href = re.substr(0, 1) === '/' && re.substr(1, 1) !== '/' ? re : '/';
       }).catch(error => {
         switch (error.code) {
           case "auth/invalid-email":
