@@ -53,7 +53,7 @@ export const SignUp = ({logo, successUrl, pathnames}) => {
                             createUserWithEmailAndPassword(auth, email, password).then(result => {
                                 return updateProfile(result.user, {displayName: fullname});
                             }).then(() => {
-                                document.location.href = re;
+                                document.location.href = re.substr(0,1)==='/'&&re.substr(1,1)!=='/'?re:'/';
                             }).catch(error => {
                                 switch(error.code){
                                     case "auth/invalid-email":
