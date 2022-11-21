@@ -1,4 +1,4 @@
-## What is fireactjs-core?
+## What is @fireactjs/core?
 
 fireactjs-core is the core package for building web applications with Firebase and Reactjs in a simple and fast approach. Its key features include:
 
