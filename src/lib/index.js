@@ -12,6 +12,7 @@ import { UserUpdateEmail } from "./components/user/UserUpdateEmail";
 import { UserUpdateName } from "./components/user/UserUpdateName";
 import { UserUpdatePassword } from "./components/user/UserUpdatePassword";
 import { SetPageTitle } from "./components/SetPageTitle";
+import { FireactContext, FireactProvider } from "./components/Fireact";
 
 import pathnames from "./pathnames.json";
 
@@ -21,6 +22,8 @@ export {
     AuthContext,
     AuthProvider,
     AuthRoutes,
+    FireactContext,
+    FireactProvider,
     MainMenu,
     PublicTemplate,
     ResetPassword,

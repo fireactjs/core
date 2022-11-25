@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { styled, useTheme } from '@mui/material/styles';
 import { AppBar as MuiAppBar, Box, CssBaseline, Drawer as MuiDrawer, IconButton, Toolbar, Divider, Typography } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Outlet } from "react-router-dom";
+import { FireactContext } from "../Fireact";
 
 const drawerWidth = 240;
 
@@ -73,7 +74,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
   );
 
-export const AppTemplate = ({logo, brand, drawerMenu, toolbarChildren, toolBarMenu}) => {
+export const AppTemplate = ({logo, drawerMenu, toolbarChildren, toolBarMenu}) => {
     const theme = useTheme();
     const [open, setOpen] = useState(true);
 
@@ -84,6 +85,9 @@ export const AppTemplate = ({logo, brand, drawerMenu, toolbarChildren, toolBarMe
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
+    const {config} = useContext(FireactContext);
+    const brand = config.brand;
     
 
     return (

@@ -4,10 +4,11 @@ import "firebase/compat/auth";
 import { Navigate, Outlet } from "react-router-dom";
 import { Box, Container } from "@mui/material";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { FireactContext } from "./Fireact";
 
 export const AuthContext = React.createContext();
 
-export const AuthProvider = ({firebaseConfig, brand, children}) => {
+export const AuthProvider = ({children}) => {
 
     // authorized user state
     const [authUser, setAuthUser] = useState(
@@ -18,7 +19,9 @@ export const AuthProvider = ({firebaseConfig, brand, children}) => {
         }
     );
 
-    const firebaseApp = firebase.initializeApp(firebaseConfig);
+    const { config } = useContext(FireactContext);
+
+    const firebaseApp = firebase.initializeApp(config.firebaseConfig);
 
     useEffect(() => {
         firebaseApp.auth().onAuthStateChanged((user) => {
@@ -45,11 +48,11 @@ export const AuthProvider = ({firebaseConfig, brand, children}) => {
                  }));
             }
         });
-    },[firebaseConfig, firebaseApp]);
+    },[firebaseApp]);
 
     return (
         <AuthContext.Provider value={{
-            authUser, setAuthUser, firebaseApp, brand
+            authUser, setAuthUser, firebaseApp
         }}>
             {children}
         </AuthContext.Provider>
