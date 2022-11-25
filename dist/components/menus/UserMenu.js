@@ -12,14 +12,18 @@ var _AccountBox = _interopRequireDefault(require("@mui/icons-material/AccountBox
 var _ExitToApp = _interopRequireDefault(require("@mui/icons-material/ExitToApp"));
 var _auth = require("firebase/auth");
 var _reactRouterDom = require("react-router-dom");
+var _Fireact = require("../Fireact");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 const UserMenu = _ref => {
   let {
-    pathnames,
     customItems
   } = _ref;
+  const {
+    config
+  } = (0, _react.useContext)(_Fireact.FireactContext);
+  const pathnames = config.pathnames;
   const profileUrl = pathnames.UserProfile;
   const [anchorEl, setAnchorEl] = (0, _react.useState)(null);
   const open = Boolean(anchorEl);

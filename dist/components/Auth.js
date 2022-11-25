@@ -13,6 +13,7 @@ require("firebase/compat/auth");
 var _reactRouterDom = require("react-router-dom");
 var _material = require("@mui/material");
 var _firestore = require("firebase/firestore");
+var _Fireact = require("./Fireact");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -23,8 +24,6 @@ const AuthContext = /*#__PURE__*/_react.default.createContext();
 exports.AuthContext = AuthContext;
 const AuthProvider = _ref => {
   let {
-    firebaseConfig,
-    brand,
     children
   } = _ref;
   // authorized user state
@@ -33,7 +32,10 @@ const AuthProvider = _ref => {
     data: {},
     checked: false
   });
-  const firebaseApp = _app.default.initializeApp(firebaseConfig);
+  const {
+    config
+  } = (0, _react.useContext)(_Fireact.FireactContext);
+  const firebaseApp = _app.default.initializeApp(config.firebaseConfig);
   (0, _react.useEffect)(() => {
     firebaseApp.auth().onAuthStateChanged(user => {
       if (user !== null) {
@@ -59,25 +61,27 @@ const AuthProvider = _ref => {
         }));
       }
     });
-  }, [firebaseConfig, firebaseApp]);
+  }, [firebaseApp]);
   return /*#__PURE__*/_react.default.createElement(AuthContext.Provider, {
     value: {
       authUser,
       setAuthUser,
-      firebaseApp,
-      brand
+      firebaseApp
     }
   }, children);
 };
 exports.AuthProvider = AuthProvider;
 const AuthRoutes = _ref2 => {
   let {
-    signInPath,
     loader
   } = _ref2;
   const {
     authUser
   } = (0, _react.useContext)(AuthContext);
+  const {
+    config
+  } = (0, _react.useContext)(_Fireact.FireactContext);
+  const signInPath = config.pathnames.SignIn;
   if (authUser.checked) {
     if (authUser.user !== null) {
       return /*#__PURE__*/_react.default.createElement(_reactRouterDom.Outlet, null);
