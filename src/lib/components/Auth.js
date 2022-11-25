@@ -59,8 +59,10 @@ export const AuthProvider = ({children}) => {
     )
 }
 
-export const AuthRoutes = ({ signInPath, loader }) => {
+export const AuthRoutes = ({ loader }) => {
     const { authUser } = useContext(AuthContext);
+    const { config } = useContext(FireactContext);
+    const signInPath = config.pathnames.SignIn;
 
     if(authUser.checked){
         if(authUser.user !== null){

@@ -1,10 +1,11 @@
 import { Alert, Box, Button, Container, Grid, Paper, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SetPageTitle } from "../SetPageTitle";
 import { deleteUser, getAuth } from "firebase/auth";
+import { FireactContext } from "../Fireact";
 
-export const UserDelete = ({pathnames}) => {
+export const UserDelete = () => {
     const [email, setEmail] = useState("");
     const [error, setError] = useState(null);
     const [processing, setProcessing] = useState(false);
@@ -12,6 +13,9 @@ export const UserDelete = ({pathnames}) => {
     const navigate = useNavigate();
 
     const auth = getAuth();
+
+    const { config } = useContext(FireactContext);
+    const pathnames = config.pathnames;
 
     return (
         <Container maxWidth="md">

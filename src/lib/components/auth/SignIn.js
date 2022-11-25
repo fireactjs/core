@@ -11,8 +11,13 @@ import { AuthContext } from "../Auth";
 import { getAuth, signInWithPopup, fetchSignInMethodsForEmail, signInWithEmailAndPassword, FacebookAuthProvider, GoogleAuthProvider, GithubAuthProvider, OAuthProvider, TwitterAuthProvider } from "firebase/auth";
 import { Link as RouterLink } from "react-router-dom";
 import { SetPageTitle } from "../SetPageTitle";
+import { FireactContext } from "../Fireact";
 
-export const SignIn = ({logo, providers, pathnames, successUrl}) => {
+export const SignIn = ({logo, successUrl}) => {
+    const { config } = useContext(FireactContext);
+    const pathnames = config.pathnames;
+    const providers = config.authProviders;
+
     const signUpUrl = pathnames.SignUp;
     const resetPasswordUrl = pathnames.ResetPassword;
 

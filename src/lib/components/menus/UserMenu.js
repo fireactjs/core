@@ -1,13 +1,18 @@
 import { Avatar, Divider, IconButton, Menu, MenuItem } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../Auth";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { FireactContext } from "../Fireact";
 
 
-export const UserMenu = ({pathnames, customItems}) => {
+export const UserMenu = ({customItems}) => {
+
+    const { config } = useContext(FireactContext);
+    const pathnames = config.pathnames;
+
     const profileUrl = pathnames.UserProfile;
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);

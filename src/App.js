@@ -45,7 +45,8 @@ function App() {
 	const config = {
 		firebaseConfig: firebaseConfig,
 		brand: "FIREACTJS",
-		pathnames: pathnames
+		pathnames: pathnames,
+		authProviders: authMethods
 	}
 
 	return (
@@ -53,34 +54,30 @@ function App() {
 			<AuthProvider>
 				<BrowserRouter>
 					<Routes>
-						<Route element={<AuthRoutes signInPath={pathnames.SignIn} loader={<Loader size="large" />} />} >
-							<Route element={<AppTemplate logo={<Logo size="large" />} toolBarMenu={<UserMenu pathnames={pathnames} />} drawerMenu={<MainMenu pathnames={pathnames}  />} />}>
+						<Route element={<AuthRoutes loader={<Loader size="large" />} />} >
+							<Route element={<AppTemplate logo={<Logo size="large" />} toolBarMenu={<UserMenu />} drawerMenu={<MainMenu />} />}>
 								<Route exact path="/" element={<></>} />
-								<Route exact path={pathnames.UserProfile} element={<UserProfile pathnames={pathnames} />} />
-								<Route exact path={pathnames.UserUpdateEmail} element={<UserUpdateEmail pathnames={pathnames} />} />
-								<Route exact path={pathnames.UserUpdateName} element={<UserUpdateName pathnames={pathnames} />} />
-								<Route exact path={pathnames.UserUpdatePassword} element={<UserUpdatePassword pathnames={pathnames} />} />
-								<Route exact path={pathnames.UserDelete} element={<UserDelete pathnames={pathnames} />} />
+								<Route exact path={pathnames.UserProfile} element={<UserProfile />} />
+								<Route exact path={pathnames.UserUpdateEmail} element={<UserUpdateEmail />} />
+								<Route exact path={pathnames.UserUpdateName} element={<UserUpdateName />} />
+								<Route exact path={pathnames.UserUpdatePassword} element={<UserUpdatePassword />} />
+								<Route exact path={pathnames.UserDelete} element={<UserDelete />} />
 							</Route>
 						</Route>
 						<Route element={<PublicTemplate />}>
 							<Route path={pathnames.SignIn} element={
 								<SignIn
 									logo={<Logo size="large" />}
-									pathnames={pathnames}
-									providers={authMethods}
 								/>
 							} />
 							<Route path={pathnames.SignUp} element={
 								<SignUp
 									logo={<Logo size="large" />}
-									pathnames={pathnames}
 								/>
 							} />
 							<Route path={pathnames.ResetPassword} element={
 								<ResetPassword
 									logo={<Logo size="large" />}
-									pathnames={pathnames}
 								/>
 							} />
 						</Route>

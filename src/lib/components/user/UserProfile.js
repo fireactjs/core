@@ -1,5 +1,5 @@
 import { Alert, Grid, List, ListItem, Box, Avatar, Typography, Divider, Paper, Container } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../Auth";
 import EditIcon from '@mui/icons-material/Edit';
 import SendIcon from '@mui/icons-material/Send';
@@ -7,14 +7,18 @@ import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import { useNavigate } from "react-router-dom";
 import { SetPageTitle } from "../SetPageTitle";
 import { getAuth, sendEmailVerification } from "firebase/auth";
+import { FireactContext } from "../Fireact";
 
-export const UserProfile = ({pathnames}) => {
+export const UserProfile = () => {
     const navigate = useNavigate();
     const auth = getAuth();
     const [sendVerification, setSendVerification] = useState({
         'success': false,
         'error': null
     })
+
+    const { config } = useContext(FireactContext);
+    const pathnames = config.pathnames;
 
     return (
         <AuthContext.Consumer>

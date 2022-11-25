@@ -1,10 +1,11 @@
 import { Alert, Box, Button, Container, Grid, Paper, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SetPageTitle } from "../SetPageTitle";
 import { getAuth, updatePassword } from "firebase/auth";
+import { FireactContext } from "../Fireact";
 
-export const UserUpdatePassword = ({pathnames}) => {
+export const UserUpdatePassword = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
@@ -13,6 +14,9 @@ export const UserUpdatePassword = ({pathnames}) => {
     const navigate = useNavigate();
 
     const auth = getAuth();
+
+    const { config } = useContext(FireactContext);
+    const pathnames = config.pathnames;
 
     return (
         <Container maxWidth="md">

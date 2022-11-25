@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Alert, Button, Box, Stack, TextField, Typography, Grid, Link } from "@mui/material";
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { Link as RouterLink } from "react-router-dom";
 import { SetPageTitle } from "../SetPageTitle";
+import { FireactContext } from "../Fireact";
 
-export const SignUp = ({logo, successUrl, pathnames}) => {
+export const SignUp = ({logo, successUrl}) => {
+    const { config } = useContext(FireactContext);
+    const pathnames = config.pathnames;
+
     const title = "Sign Up";
     const signInUrl = pathnames.SignIn;
     const resetPasswordUrl = pathnames.ResetPassword;
