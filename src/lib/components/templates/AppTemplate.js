@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import { styled, useTheme } from '@mui/material/styles';
-import { AppBar as MuiAppBar, Box, CssBaseline, Drawer as MuiDrawer, IconButton, Toolbar, Divider, Typography } from "@mui/material";
+import { AppBar as MuiAppBar, Box, CssBaseline, Drawer as MuiDrawer, IconButton, Toolbar, Divider, Typography, Button } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { FireactContext } from "../Fireact";
 
 const drawerWidth = 240;
@@ -88,7 +88,7 @@ export const AppTemplate = ({logo, drawerMenu, toolbarChildren, toolBarMenu}) =>
 
     const {config} = useContext(FireactContext);
     const brand = config.brand;
-    
+    const navigate = useNavigate();
 
     return (
         <Box sx={{ display: "flex" }}>
@@ -116,10 +116,12 @@ export const AppTemplate = ({logo, drawerMenu, toolbarChildren, toolBarMenu}) =>
             <Drawer variant="permanent" open={open}>
                 <DrawerHeader>
                     {open && <div style={{marginLeft:'0px', marginRight:'auto', display:'inline-flex',alignItems: 'center', flexWrap: 'wrap'}}>
-                        <div style={{display: 'inline-flex', paddingRight: '20px'}}>
-                            {logo}
-                        </div>
-                        <Typography variant="h6">{brand}</Typography>
+                        <Button style={{color: "#000000"}} onClick={() => navigate("/")}>
+                          <div style={{display: 'inline-flex', paddingRight: '20px'}}>
+                              {logo}
+                          </div>
+                          <Typography variant="h6">{brand}</Typography>
+                        </Button>
                     </div>}
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
