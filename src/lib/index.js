@@ -13,11 +13,13 @@ import { UserUpdateName } from "./components/user/UserUpdateName";
 import { UserUpdatePassword } from "./components/user/UserUpdatePassword";
 import { SetPageTitle } from "./components/SetPageTitle";
 import { FireactContext, FireactProvider } from "./components/Fireact";
+import { ActionPages } from './components/auth/ActionPages';
 
 import pathnames from "./pathnames.json";
 
 export {
     pathnames,
+    ActionPages,
     AppTemplate,
     AuthContext,
     AuthProvider,

@@ -1,4 +1,5 @@
 {
+    "ActionPages": "/auth-action",
     "ResetPassword": "/reset-password",
     "SignIn": "/sign-in",
     "SignUp": "/sign-up",

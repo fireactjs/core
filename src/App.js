@@ -1,6 +1,6 @@
 import './App.css';
 import firebaseConfig from "./firebaseConfig.json";
-import { pathnames, AppTemplate, AuthProvider, AuthRoutes, FireactProvider, MainMenu, PublicTemplate, ResetPassword, SignIn, SignUp, UserMenu, UserProfile, UserUpdateEmail, UserUpdateName, UserUpdatePassword, UserDelete } from './lib';
+import { pathnames, ActionPages, AppTemplate, AuthProvider, AuthRoutes, FireactProvider, MainMenu, PublicTemplate, ResetPassword, SignIn, SignUp, UserMenu, UserProfile, UserUpdateEmail, UserUpdateName, UserUpdatePassword, UserDelete } from './lib';
 import { BrowserRouter, Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
@@ -77,6 +77,11 @@ function App() {
 							} />
 							<Route path={pathnames.ResetPassword} element={
 								<ResetPassword
+									logo={<Logo size="large" />}
+								/>
+							} />
+							<Route path={pathnames.ActionPages} element={
+								<ActionPages
 									logo={<Logo size="large" />}
 								/>
 							} />
