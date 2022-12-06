@@ -5,7 +5,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { FireactContext } from "../Fireact";
 
-export const MainMenu = () => {
+export const MainMenu = ({customItems}) => {
     const { config } = useContext(FireactContext);
     const pathnames = config.pathnames;
     const profileUrl = pathnames.UserProfile;
@@ -17,6 +17,7 @@ export const MainMenu = () => {
                     <ListItemText primary={<Typography color="textPrimary">Home</Typography>} />
                 </ListItemButton>
             </NavLink>
+            {customItems}
             {profileUrl && [
                 <Divider key="profile-divider"/>,
                 <NavLink to={profileUrl} style={{textDecoration:'none'}} key="profile">
