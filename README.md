@@ -101,7 +101,7 @@ Replace the code in your `src/App.js` with the code below. You can copy the code
 ```jsx
 import './App.css';
 import firebaseConfig from "./firebaseConfig.json";
-import { pathnames, AppTemplate, AuthProvider, AuthRoutes, FireactProvider, MainMenu, PublicTemplate, ResetPassword, SignIn, SignUp, UserMenu, UserProfile, UserUpdateEmail, UserUpdateName, UserUpdatePassword, UserDelete } from '@fireactjs/core';
+import { pathnames, ActionPages, AppTemplate, AuthProvider, AuthRoutes, FireactProvider, MainMenu, PublicTemplate, ResetPassword, SignIn, SignUp, UserMenu, UserProfile, UserUpdateEmail, UserUpdateName, UserUpdatePassword, UserDelete } from '@fireactjs/core';
 import { BrowserRouter, Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
@@ -181,6 +181,11 @@ function App() {
 									logo={<Logo size="large" />}
 								/>
 							} />
+							<Route path={pathnames.ActionPages} element={
+								<ActionPages
+									logo={<Logo size="large" />}
+								/>
+							} />
 						</Route>
 					</Routes>
 				</BrowserRouter>
@@ -196,6 +201,10 @@ export default App;
 Replace `Brand` and `Logo` to customise the logo and the brand of your web application.
 
 For further customisation, please read the documentation.
+
+## Update Firebase template action URL (Optional)
+
+Go to your Firebase project authentication → Templates, then click on the Edit Template button, and then click on “Customize action URL”. Use `https://www.yourdomain.com/auth-action` as the custom action URL and replace `www.yourdomain.com` with your actual application domain.
 
 ## Run your app locally
 
