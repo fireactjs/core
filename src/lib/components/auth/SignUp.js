@@ -52,7 +52,7 @@ export const SignUp = ({logo, successUrl}) => {
                         !passwordSpecialRegex.test(String(password)) || password.length < 8){
                             setError('The password must contain at least 8 characters with letters (both uppercase and lowercase), numbers, and symbols.');
                             setProcessing(false);
-                        }else{;
+                        }else{
                             const auth = getAuth();
                             createUserWithEmailAndPassword(auth, email, password).then(result => {
                                 return updateProfile(result.user, {displayName: fullname});
