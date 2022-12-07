@@ -63,6 +63,7 @@ const ResetPassword = ({actionCode}) => {
         verifyPasswordResetCode(auth, actionCode).then(() => {
             setStage('form');
         }).catch(error => {
+            setStage('');
             setError(error.message);
         })
     },[actionCode]);
