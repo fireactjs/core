@@ -43,19 +43,35 @@ export const ActionPages = ({logo}) => {
             </Box>
             <Box>
                 <Stack spacing={2} mt={2}>
-                    {mode === 'verifyEmail' && <VerifyEmail actionCode={actionCode} />}
+                    {(mode === 'verifyEmail' || mode === 'recoverEmail') && <HandleAction actionCode={actionCode} mode={mode} />}
                 </Stack>
             </Box>
         </>
     )
 }
 
-const VerifyEmail = ({actionCode}) => {
+const HandleAction = ({mode, actionCode}) => {
     const [processing, setProcessing] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
 
     const { config } = useContext(FireactContext);
+
+    let processingMessage = 'Please wait';
+    let successMessage = 'Done';
+
+    switch(mode){
+        case 'verifyEmail':
+            processingMessage = 'Please wait while verifying your email...';
+            successMessage = <>Your email is verified. Please <NavLink to={config.pathnames.SignIn}>sign in</NavLink> again.</>
+            break;
+        case 'recoverEmail':
+            processingMessage = 'Please wait while resotring your email...';
+            successMessage = <>Your email is restored. Please <NavLink to={config.pathnames.ResetPassword}>reset password</NavLink> to ensure your account is secured.</>
+            break;
+        default:
+            break;
+    }
 
     useEffect(() => {
         setProcessing(true);
@@ -75,10 +91,10 @@ const VerifyEmail = ({actionCode}) => {
     return (
         <>
             {processing?(
-                <Typography>Please wait while verifying your email...</Typography>
+                <Typography>{processingMessage}</Typography>
             ):(
                 success?(
-                    <Alert severity="success">Your email is verified. Please <NavLink to={config.pathnames.SignIn}>sign in</NavLink> again.</Alert>
+                    <Alert severity="success">{successMessage}</Alert>
                 ):(
                     error?(
                         <Alert severity="error">{error}</Alert>
