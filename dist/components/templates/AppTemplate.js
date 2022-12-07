@@ -109,6 +109,7 @@ const AppTemplate = _ref4 => {
     config
   } = (0, _react.useContext)(_Fireact.FireactContext);
   const brand = config.brand;
+  const navigate = (0, _reactRouterDom.useNavigate)();
   return /*#__PURE__*/_react.default.createElement(_material.Box, {
     sx: {
       display: "flex"
@@ -142,6 +143,11 @@ const AppTemplate = _ref4 => {
       alignItems: 'center',
       flexWrap: 'wrap'
     }
+  }, /*#__PURE__*/_react.default.createElement(_material.Button, {
+    style: {
+      color: "#000000"
+    },
+    onClick: () => navigate("/")
   }, /*#__PURE__*/_react.default.createElement("div", {
     style: {
       display: 'inline-flex',
@@ -149,7 +155,7 @@ const AppTemplate = _ref4 => {
     }
   }, logo), /*#__PURE__*/_react.default.createElement(_material.Typography, {
     variant: "h6"
-  }, brand)), /*#__PURE__*/_react.default.createElement(_material.IconButton, {
+  }, brand))), /*#__PURE__*/_react.default.createElement(_material.IconButton, {
     onClick: handleDrawerClose
   }, theme.direction === 'rtl' ? /*#__PURE__*/_react.default.createElement(_ChevronRight.default, null) : /*#__PURE__*/_react.default.createElement(_ChevronLeft.default, null))), /*#__PURE__*/_react.default.createElement(_material.Divider, null), drawerMenu, /*#__PURE__*/_react.default.createElement(_material.Divider, null)), /*#__PURE__*/_react.default.createElement(_material.Box, {
     component: "main",

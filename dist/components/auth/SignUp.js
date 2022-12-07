@@ -92,7 +92,6 @@ const SignUp = _ref => {
         setError('The password must contain at least 8 characters with letters (both uppercase and lowercase), numbers, and symbols.');
         setProcessing(false);
       } else {
-        ;
         const auth = (0, _auth.getAuth)();
         (0, _auth.createUserWithEmailAndPassword)(auth, email, password).then(result => {
           return (0, _auth.updateProfile)(result.user, {
