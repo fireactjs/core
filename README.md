@@ -12,6 +12,10 @@ fireactjs-core is the core package for building web applications with Firebase a
 
 To experience the package, go to [https://demo.fireactjs.com](https://demo.fireactjs.com)
 
+## Documentation
+
+For documentation of the package, go to [https://fireactjs.com/docs/core-package/](https://fireactjs.com/docs/core-package/)
+
 ## Installation
 
 To install the fireactjs-core components, create your Reactjs project first, and then run `npm I @fireactjs/core` to install the components.
