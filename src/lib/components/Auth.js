@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
+import { initializeApp } from 'firebase/app';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { Navigate, Outlet } from "react-router-dom";
 import { Box, Container } from "@mui/material";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { getFunctions } from 'firebase/functions';
 import { FireactContext } from "./Fireact";
 
 export const AuthContext = React.createContext();
@@ -21,14 +22,17 @@ export const AuthProvider = ({children}) => {
 
     const { config } = useContext(FireactContext);
 
-    const firebaseApp = firebase.initializeApp(config.firebaseConfig);
+    const firebaseApp = initializeApp(config.firebaseConfig);
+    const firestoreDb = getFirestore(firebaseApp);
+    const cloudFunctions = getFunctions(firebaseApp);
+    const firebaseAuth = getAuth(firebaseApp);  
 
     useEffect(() => {
-        firebaseApp.auth().onAuthStateChanged((user) => {
+        onAuthStateChanged(firebaseAuth, (user) => {
             if(user !== null){
                 user.getIdToken().then(token => {
-                    const db = getFirestore(firebaseApp);
-                    const userDoc = doc(db, 'users', user.uid);
+                    
+                    const userDoc = doc(firestoreDb, 'users', user.uid);
                     setAuthUser(prevState => ({
                         ...prevState,
                         user: user,
@@ -48,11 +52,11 @@ export const AuthProvider = ({children}) => {
                  }));
             }
         });
-    },[firebaseApp]);
+    },[firebaseApp, firestoreDb, firebaseAuth]);
 
     return (
         <AuthContext.Provider value={{
-            authUser, setAuthUser, firebaseApp
+            authUser, setAuthUser, firebaseApp, firestoreDb, cloudFunctions, firebaseAuth
         }}>
             {children}
         </AuthContext.Provider>
