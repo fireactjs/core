@@ -23,7 +23,7 @@ export const AuthProvider = ({children}) => {
     const { config } = useContext(FireactContext);
 
     const firebaseApp = initializeApp(config.firebaseConfig);
-    const firestoreDb = getFirestore(firebaseApp);
+    const firestore = getFirestore(firebaseApp);
     const cloudFunctions = getFunctions(firebaseApp);
     const firebaseAuth = getAuth(firebaseApp);  
 
@@ -32,7 +32,7 @@ export const AuthProvider = ({children}) => {
             if(user !== null){
                 user.getIdToken().then(token => {
                     
-                    const userDoc = doc(firestoreDb, 'users', user.uid);
+                    const userDoc = doc(firestore, 'users', user.uid);
                     setAuthUser(prevState => ({
                         ...prevState,
                         user: user,
@@ -52,11 +52,11 @@ export const AuthProvider = ({children}) => {
                  }));
             }
         });
-    },[firebaseApp, firestoreDb, firebaseAuth]);
+    },[firebaseApp, firestore, firebaseAuth]);
 
     return (
         <AuthContext.Provider value={{
-            authUser, setAuthUser, firebaseApp, firestoreDb, cloudFunctions, firebaseAuth
+            authUser, setAuthUser, firebaseApp, firestore, cloudFunctions, firebaseAuth
         }}>
             {children}
         </AuthContext.Provider>
