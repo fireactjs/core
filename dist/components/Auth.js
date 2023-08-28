@@ -8,13 +8,13 @@ require("core-js/modules/web.dom-collections.iterator.js");
 require("core-js/modules/es.regexp.exec.js");
 require("core-js/modules/es.string.search.js");
 var _react = _interopRequireWildcard(require("react"));
-var _app = _interopRequireDefault(require("firebase/compat/app"));
-require("firebase/compat/auth");
+var _app = require("firebase/app");
+var _auth = require("firebase/auth");
 var _reactRouterDom = require("react-router-dom");
 var _material = require("@mui/material");
 var _firestore = require("firebase/firestore");
+var _functions = require("firebase/functions");
 var _Fireact = require("./Fireact");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -35,13 +35,15 @@ const AuthProvider = _ref => {
   const {
     config
   } = (0, _react.useContext)(_Fireact.FireactContext);
-  const firebaseApp = _app.default.initializeApp(config.firebaseConfig);
+  const firebaseApp = (0, _app.initializeApp)(config.firebaseConfig);
+  const firestore = (0, _firestore.getFirestore)(firebaseApp);
+  const cloudFunctions = (0, _functions.getFunctions)(firebaseApp);
+  const firebaseAuth = (0, _auth.getAuth)(firebaseApp);
   (0, _react.useEffect)(() => {
-    firebaseApp.auth().onAuthStateChanged(user => {
+    (0, _auth.onAuthStateChanged)(firebaseAuth, user => {
       if (user !== null) {
         user.getIdToken().then(token => {
-          const db = (0, _firestore.getFirestore)(firebaseApp);
-          const userDoc = (0, _firestore.doc)(db, 'users', user.uid);
+          const userDoc = (0, _firestore.doc)(firestore, 'users', user.uid);
           setAuthUser(prevState => _objectSpread(_objectSpread({}, prevState), {}, {
             user: user,
             checked: true
@@ -61,12 +63,15 @@ const AuthProvider = _ref => {
         }));
       }
     });
-  }, [firebaseApp]);
+  }, [firebaseApp, firestore, firebaseAuth]);
   return /*#__PURE__*/_react.default.createElement(AuthContext.Provider, {
     value: {
       authUser,
       setAuthUser,
-      firebaseApp
+      firebaseApp,
+      firestore,
+      cloudFunctions,
+      firebaseAuth
     }
   }, children);
 };
