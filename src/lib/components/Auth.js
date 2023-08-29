@@ -4,7 +4,6 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { Navigate, Outlet } from "react-router-dom";
 import { Box, Container } from "@mui/material";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
-import { getFunctions } from 'firebase/functions';
 import { FireactContext } from "./Fireact";
 
 export const AuthContext = React.createContext();
@@ -23,17 +22,13 @@ export const AuthProvider = ({children}) => {
     const { config } = useContext(FireactContext);
 
     const firebaseApp = initializeApp(config.firebaseConfig);
-    const firestore = getFirestore(firebaseApp);
-    const cloudFunctions = getFunctions(firebaseApp);
-    const firebaseAuth = getAuth(firebaseApp); 
-    
-    console.log(firestore, Object.getPrototypeOf(firestore));
+    const firebaseAuth = getAuth(firebaseApp);
 
     useEffect(() => {
         onAuthStateChanged(firebaseAuth, (user) => {
             if(user !== null){
                 user.getIdToken().then(token => {
-                    
+                    const firestore = getFirestore(firebaseApp);
                     const userDoc = doc(firestore, 'users', user.uid);
                     setAuthUser(prevState => ({
                         ...prevState,
@@ -54,11 +49,11 @@ export const AuthProvider = ({children}) => {
                  }));
             }
         });
-    },[firebaseApp, firestore, firebaseAuth]);
+    },[firebaseApp, firebaseAuth]);
 
     return (
         <AuthContext.Provider value={{
-            authUser, setAuthUser, firebaseApp, firestore, cloudFunctions, firebaseAuth
+            authUser, setAuthUser, firebaseApp
         }}>
             {children}
         </AuthContext.Provider>
