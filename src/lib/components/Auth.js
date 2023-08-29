@@ -5,6 +5,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { Box, Container } from "@mui/material";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 import { FireactContext } from "./Fireact";
+import { getFunctions } from "firebase/functions";
 
 export const AuthContext = React.createContext();
 
@@ -20,15 +21,25 @@ export const AuthProvider = ({children}) => {
     );
 
     const { config } = useContext(FireactContext);
-
-    const firebaseApp = initializeApp(config.firebaseConfig);
-    const firebaseAuth = getAuth(firebaseApp);
+    const [firebaseApp, setFirebaseApp] = useState(null);
+    const [authInstance, setAuthInstance] = useState(null);
+    const [firestoreInstance, setFirestoreInstance] = useState(null);
+    const [functionsInstance, setFunctionsInstance] = useState(null);
 
     useEffect(() => {
-        onAuthStateChanged(firebaseAuth, (user) => {
+        const app = initializeApp(config.firebaseConfig);
+        const auth = getAuth(app);
+        const firestore = getFirestore(app);
+        const functions = getFunctions(app);
+
+        setFirebaseApp(app);
+        setAuthInstance(auth);
+        setFirestoreInstance(firestore);
+        setFunctionsInstance(functions);
+    
+        onAuthStateChanged(auth, (user) => {
             if(user !== null){
                 user.getIdToken().then(token => {
-                    const firestore = getFirestore(firebaseApp);
                     const userDoc = doc(firestore, 'users', user.uid);
                     setAuthUser(prevState => ({
                         ...prevState,
@@ -49,11 +60,11 @@ export const AuthProvider = ({children}) => {
                  }));
             }
         });
-    },[firebaseApp, firebaseAuth]);
+    },[config.firebaseConfig]);
 
     return (
         <AuthContext.Provider value={{
-            authUser, setAuthUser, firebaseApp
+            authUser, setAuthUser, firebaseApp, authInstance, firestoreInstance, functionsInstance
         }}>
             {children}
         </AuthContext.Provider>

@@ -14,6 +14,7 @@ var _reactRouterDom = require("react-router-dom");
 var _material = require("@mui/material");
 var _firestore = require("firebase/firestore");
 var _Fireact = require("./Fireact");
+var _functions = require("firebase/functions");
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -34,13 +35,22 @@ const AuthProvider = _ref => {
   const {
     config
   } = (0, _react.useContext)(_Fireact.FireactContext);
-  const firebaseApp = (0, _app.initializeApp)(config.firebaseConfig);
-  const firebaseAuth = (0, _auth.getAuth)(firebaseApp);
+  const [firebaseApp, setFirebaseApp] = (0, _react.useState)(null);
+  const [authInstance, setAuthInstance] = (0, _react.useState)(null);
+  const [firestoreInstance, setFirestoreInstance] = (0, _react.useState)(null);
+  const [functionsInstance, setFunctionsInstance] = (0, _react.useState)(null);
   (0, _react.useEffect)(() => {
-    (0, _auth.onAuthStateChanged)(firebaseAuth, user => {
+    const app = (0, _app.initializeApp)(config.firebaseConfig);
+    const auth = (0, _auth.getAuth)(app);
+    const firestore = (0, _firestore.getFirestore)(app);
+    const functions = (0, _functions.getFunctions)(app);
+    setFirebaseApp(app);
+    setAuthInstance(auth);
+    setFirestoreInstance(firestore);
+    setFunctionsInstance(functions);
+    (0, _auth.onAuthStateChanged)(auth, user => {
       if (user !== null) {
         user.getIdToken().then(token => {
-          const firestore = (0, _firestore.getFirestore)(firebaseApp);
           const userDoc = (0, _firestore.doc)(firestore, 'users', user.uid);
           setAuthUser(prevState => _objectSpread(_objectSpread({}, prevState), {}, {
             user: user,
@@ -61,12 +71,15 @@ const AuthProvider = _ref => {
         }));
       }
     });
-  }, [firebaseApp, firebaseAuth]);
+  }, [config.firebaseConfig]);
   return /*#__PURE__*/_react.default.createElement(AuthContext.Provider, {
     value: {
       authUser,
       setAuthUser,
-      firebaseApp
+      firebaseApp,
+      authInstance,
+      firestoreInstance,
+      functionsInstance
     }
   }, children);
 };
