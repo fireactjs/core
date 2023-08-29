@@ -25,7 +25,9 @@ export const AuthProvider = ({children}) => {
     const firebaseApp = initializeApp(config.firebaseConfig);
     const firestore = getFirestore(firebaseApp);
     const cloudFunctions = getFunctions(firebaseApp);
-    const firebaseAuth = getAuth(firebaseApp);  
+    const firebaseAuth = getAuth(firebaseApp); 
+    
+    console.log(firestore, Object.getPrototypeOf(firestore));
 
     useEffect(() => {
         onAuthStateChanged(firebaseAuth, (user) => {

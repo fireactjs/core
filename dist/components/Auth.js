@@ -39,6 +39,7 @@ const AuthProvider = _ref => {
   const firestore = (0, _firestore.getFirestore)(firebaseApp);
   const cloudFunctions = (0, _functions.getFunctions)(firebaseApp);
   const firebaseAuth = (0, _auth.getAuth)(firebaseApp);
+  console.log(firestore, Object.getPrototypeOf(firestore));
   (0, _react.useEffect)(() => {
     (0, _auth.onAuthStateChanged)(firebaseAuth, user => {
       if (user !== null) {
