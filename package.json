@@ -1,6 +1,6 @@
 {
   "name": "@fireactjs/core",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "private": false,
   "author": "Chaoming Li",
   "keywords": [
@@ -40,7 +40,7 @@
   },
   "scripts": {
     "start": "PUBLIC_URL=/ react-scripts start",
-    "build": "rm -rf dist && NODE_ENV=production babel src/lib --out-dir dist --copy-files",
+    "build": "webpack --mode production",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -68,7 +68,10 @@
     "@babel/preset-env": "^7.19.4",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0"
+    "@testing-library/user-event": "^13.5.0",
+    "core-js": "^3.32.1",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
   },
   "description": "fireactjs-core is the core package for building web applications with Firebase and Reactjs in a simple and fast approach. Its key features include:",
   "bugs": {
