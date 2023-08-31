@@ -23,7 +23,7 @@ To install the fireactjs-core components, create your Reactjs project first, and
 ```jsx
 npx create-react-app my-app
 cd my-app
-npm i @fireactjs/core @mui/material @emotion/react @emotion/styled
+npm i @fireactjs/core react-router-dom firebase @mui/material @mui/icons-material @emotion/react @emotion/styled
 ```
 
 For details on how to create a Reactjs application, please see [https://reactjs.org/docs/create-a-new-react-app.html](https://reactjs.org/docs/create-a-new-react-app.html)
