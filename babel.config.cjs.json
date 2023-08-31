@@ -3,6 +3,7 @@
         [
             "@babel/env",
             {
+		"modules": "cjs",
                 "targets": {
                 "edge": "17",
                 "firefox": "60",

@@ -11,8 +11,8 @@
     "authentication",
     "auth"
   ],
-  "main": "dist/index.js",
-  "module": "dist/index.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "files": [
     "dist",
     "README.md",
@@ -41,7 +41,7 @@
   },
   "scripts": {
     "start": "PUBLIC_URL=/ react-scripts start",
-    "build": "rm -rf dist && NODE_ENV=production babel src/lib --out-dir dist --copy-files",
+    "build": "rm -rf dist && NODE_ENV=production babel src/lib --out-dir dist/esm --copy-files --config-file ./babel.config.esm.json & NODE_ENV=production babel src/lib --out-dir dist/cjs --copy-files --config-file ./babel.config.cjs.json",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
