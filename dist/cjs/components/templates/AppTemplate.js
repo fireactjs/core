@@ -1,18 +1,28 @@
-import "core-js/modules/web.dom-collections.iterator.js";
-import "core-js/modules/es.symbol.description.js";
+"use strict";
+
+require("core-js/modules/es.weak-map.js");
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.AppTemplate = void 0;
+require("core-js/modules/web.dom-collections.iterator.js");
+require("core-js/modules/es.symbol.description.js");
+var _react = _interopRequireWildcard(require("react"));
+var _styles = require("@mui/material/styles");
+var _material = require("@mui/material");
+var _Menu = _interopRequireDefault(require("@mui/icons-material/Menu"));
+var _ChevronLeft = _interopRequireDefault(require("@mui/icons-material/ChevronLeft"));
+var _ChevronRight = _interopRequireDefault(require("@mui/icons-material/ChevronRight"));
+var _reactRouterDom = require("react-router-dom");
+var _Fireact = require("../Fireact");
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-import React, { useContext, useState } from "react";
-import { styled, useTheme } from '@mui/material/styles';
-import { AppBar as MuiAppBar, Box, CssBaseline, Drawer as MuiDrawer, IconButton, Toolbar, Divider, Typography, Button } from "@mui/material";
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { Outlet, useNavigate } from "react-router-dom";
-import { FireactContext } from "../Fireact";
 const drawerWidth = 240;
 const openedMixin = theme => ({
   width: drawerWidth,
@@ -33,7 +43,7 @@ const closedMixin = theme => ({
     width: "calc(".concat(theme.spacing(9), " + 1px)")
   }
 });
-const DrawerHeader = styled('div')(_ref => {
+const DrawerHeader = (0, _styles.styled)('div')(_ref => {
   let {
     theme
   } = _ref;
@@ -44,7 +54,7 @@ const DrawerHeader = styled('div')(_ref => {
     padding: theme.spacing(0, 1)
   }, theme.mixins.toolbar);
 });
-const AppBar = styled(MuiAppBar, {
+const AppBar = (0, _styles.styled)(_material.AppBar, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref2 => {
   let {
@@ -66,7 +76,7 @@ const AppBar = styled(MuiAppBar, {
     })
   });
 });
-const Drawer = styled(MuiDrawer, {
+const Drawer = (0, _styles.styled)(_material.Drawer, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref3 => {
   let {
@@ -84,15 +94,15 @@ const Drawer = styled(MuiDrawer, {
     '& .MuiDrawer-paper': closedMixin(theme)
   }));
 });
-export const AppTemplate = _ref4 => {
+const AppTemplate = _ref4 => {
   let {
     logo,
     drawerMenu,
     toolbarChildren,
     toolBarMenu
   } = _ref4;
-  const theme = useTheme();
-  const [open, setOpen] = useState(true);
+  const theme = (0, _styles.useTheme)();
+  const [open, setOpen] = (0, _react.useState)(true);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -101,17 +111,17 @@ export const AppTemplate = _ref4 => {
   };
   const {
     config
-  } = useContext(FireactContext);
+  } = (0, _react.useContext)(_Fireact.FireactContext);
   const brand = config.brand;
-  const navigate = useNavigate();
-  return /*#__PURE__*/React.createElement(Box, {
+  const navigate = (0, _reactRouterDom.useNavigate)();
+  return /*#__PURE__*/_react.default.createElement(_material.Box, {
     sx: {
       display: "flex"
     }
-  }, /*#__PURE__*/React.createElement(CssBaseline, null), /*#__PURE__*/React.createElement(AppBar, {
+  }, /*#__PURE__*/_react.default.createElement(_material.CssBaseline, null), /*#__PURE__*/_react.default.createElement(AppBar, {
     position: "fixed",
     open: open
-  }, /*#__PURE__*/React.createElement(Toolbar, null, /*#__PURE__*/React.createElement(IconButton, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Toolbar, null, /*#__PURE__*/_react.default.createElement(_material.IconButton, {
     color: "inherit",
     "aria-label": "open drawer",
     onClick: handleDrawerOpen,
@@ -121,15 +131,15 @@ export const AppTemplate = _ref4 => {
     }, open && {
       display: 'none'
     })
-  }, /*#__PURE__*/React.createElement(MenuIcon, null)), toolbarChildren, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement(_Menu.default, null)), toolbarChildren, /*#__PURE__*/_react.default.createElement("div", {
     style: {
       marginLeft: "auto",
       marginRight: "0px"
     }
-  }, toolBarMenu))), /*#__PURE__*/React.createElement(Drawer, {
+  }, toolBarMenu))), /*#__PURE__*/_react.default.createElement(Drawer, {
     variant: "permanent",
     open: open
-  }, /*#__PURE__*/React.createElement(DrawerHeader, null, open && /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement(DrawerHeader, null, open && /*#__PURE__*/_react.default.createElement("div", {
     style: {
       marginLeft: '0px',
       marginRight: 'auto',
@@ -137,21 +147,21 @@ export const AppTemplate = _ref4 => {
       alignItems: 'center',
       flexWrap: 'wrap'
     }
-  }, /*#__PURE__*/React.createElement(Button, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Button, {
     style: {
       color: "#000000"
     },
     onClick: () => navigate("/")
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     style: {
       display: 'inline-flex',
       paddingRight: '20px'
     }
-  }, logo), /*#__PURE__*/React.createElement(Typography, {
+  }, logo), /*#__PURE__*/_react.default.createElement(_material.Typography, {
     variant: "h6"
-  }, brand))), /*#__PURE__*/React.createElement(IconButton, {
+  }, brand))), /*#__PURE__*/_react.default.createElement(_material.IconButton, {
     onClick: handleDrawerClose
-  }, theme.direction === 'rtl' ? /*#__PURE__*/React.createElement(ChevronRightIcon, null) : /*#__PURE__*/React.createElement(ChevronLeftIcon, null))), /*#__PURE__*/React.createElement(Divider, null), drawerMenu, /*#__PURE__*/React.createElement(Divider, null)), /*#__PURE__*/React.createElement(Box, {
+  }, theme.direction === 'rtl' ? /*#__PURE__*/_react.default.createElement(_ChevronRight.default, null) : /*#__PURE__*/_react.default.createElement(_ChevronLeft.default, null))), /*#__PURE__*/_react.default.createElement(_material.Divider, null), drawerMenu, /*#__PURE__*/_react.default.createElement(_material.Divider, null)), /*#__PURE__*/_react.default.createElement(_material.Box, {
     component: "main",
     sx: {
       flexGrow: 1,
@@ -159,14 +169,15 @@ export const AppTemplate = _ref4 => {
       height: '100vh',
       overflow: 'auto'
     }
-  }, /*#__PURE__*/React.createElement(DrawerHeader, null), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement(DrawerHeader, null), /*#__PURE__*/_react.default.createElement("div", {
     style: {
       position: 'relative'
     }
-  }, /*#__PURE__*/React.createElement(Box, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Box, {
     mt: 5,
     ml: 3,
     mr: 3,
     mb: 3
-  }, /*#__PURE__*/React.createElement(Outlet, null)))));
+  }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Outlet, null)))));
 };
+exports.AppTemplate = AppTemplate;

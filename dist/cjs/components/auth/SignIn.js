@@ -1,34 +1,44 @@
+"use strict";
+
+require("core-js/modules/es.symbol.description.js");
+require("core-js/modules/es.weak-map.js");
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.SignIn = void 0;
+require("core-js/modules/web.dom-collections.iterator.js");
+require("core-js/modules/web.url.js");
+require("core-js/modules/web.url-search-params.js");
+var _material = require("@mui/material");
+var _react = _interopRequireWildcard(require("react"));
+var _google = _interopRequireDefault(require("../../assets/images/google.svg"));
+var _microsoft = _interopRequireDefault(require("../../assets/images/microsoft.svg"));
+var _Email = _interopRequireDefault(require("@mui/icons-material/Email"));
+var _Facebook = _interopRequireDefault(require("@mui/icons-material/Facebook"));
+var _Apple = _interopRequireDefault(require("@mui/icons-material/Apple"));
+var _Twitter = _interopRequireDefault(require("@mui/icons-material/Twitter"));
+var _GitHub = _interopRequireDefault(require("@mui/icons-material/GitHub"));
+var _Auth = require("../Auth");
+var _auth = require("firebase/auth");
+var _reactRouterDom = require("react-router-dom");
+var _SetPageTitle = require("../SetPageTitle");
+var _Fireact = require("../Fireact");
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-import "core-js/modules/web.dom-collections.iterator.js";
-import "core-js/modules/web.url.js";
-import "core-js/modules/web.url-search-params.js";
-import "core-js/modules/es.symbol.description.js";
-import { Alert, Button, Box, Container, Grid, Stack, TextField, Typography, Link } from "@mui/material";
-import React, { useContext, useState } from "react";
-import googleSvg from "../../assets/images/google.svg";
-import microsoftSvg from "../../assets/images/microsoft.svg";
-import EmailIcon from '@mui/icons-material/Email';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import AppleIcon from '@mui/icons-material/Apple';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import { AuthContext } from "../Auth";
-import { getAuth, signInWithPopup, fetchSignInMethodsForEmail, signInWithEmailAndPassword, FacebookAuthProvider, GoogleAuthProvider, GithubAuthProvider, OAuthProvider, TwitterAuthProvider } from "firebase/auth";
-import { Link as RouterLink } from "react-router-dom";
-import { SetPageTitle } from "../SetPageTitle";
-import { FireactContext } from "../Fireact";
-export const SignIn = _ref => {
+const SignIn = _ref => {
   let {
     logo,
     successUrl
   } = _ref;
   const {
     config
-  } = useContext(FireactContext);
+  } = (0, _react.useContext)(_Fireact.FireactContext);
   const pathnames = config.pathnames;
   const providers = config.authProviders;
   const signUpUrl = pathnames.SignUp;
@@ -37,11 +47,11 @@ export const SignIn = _ref => {
   const title = "Sign In";
   const {
     setAuthUser
-  } = useContext(AuthContext);
-  const [processing, setProcessing] = useState(false);
-  const [error, setError] = useState(null);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  } = (0, _react.useContext)(_Auth.AuthContext);
+  const [processing, setProcessing] = (0, _react.useState)(false);
+  const [error, setError] = (0, _react.useState)(null);
+  const [email, setEmail] = (0, _react.useState)("");
+  const [password, setPassword] = (0, _react.useState)("");
   const params = new URL(document.location).searchParams;
   const re = params.get('re') || successUrl || "/"; // redirect to parameter "re", successUrl or homepage after sign in
 
@@ -51,30 +61,30 @@ export const SignIn = _ref => {
     let provider = null;
     switch (providerName) {
       case "google":
-        provider = new GoogleAuthProvider();
+        provider = new _auth.GoogleAuthProvider();
         break;
       case "facebook":
-        provider = new FacebookAuthProvider();
+        provider = new _auth.FacebookAuthProvider();
         break;
       case "github":
-        provider = new GithubAuthProvider();
+        provider = new _auth.GithubAuthProvider();
         break;
       case "apple":
-        provider = new OAuthProvider('apple.com');
+        provider = new _auth.OAuthProvider('apple.com');
         provider.addScope('email');
         provider.addScope('name');
         break;
       case "microsoft":
-        provider = new OAuthProvider('microsoft.com');
+        provider = new _auth.OAuthProvider('microsoft.com');
         break;
       case "twitter":
-        provider = new TwitterAuthProvider();
+        provider = new _auth.TwitterAuthProvider();
         break;
       default:
         break;
     }
-    const auth = getAuth();
-    signInWithPopup(auth, provider).then(result => {
+    const auth = (0, _auth.getAuth)();
+    (0, _auth.signInWithPopup)(auth, provider).then(result => {
       const user = result.user;
       setAuthUser(prevState => _objectSpread(_objectSpread({}, prevState), {}, {
         user: {
@@ -86,7 +96,7 @@ export const SignIn = _ref => {
       document.location.href = re.substr(0, 1) === '/' && re.substr(1, 1) !== '/' ? re : '/';
     }).catch(error => {
       if (error.code === 'auth/account-exists-with-different-credential') {
-        fetchSignInMethodsForEmail(auth, error.customData.email).then(methods => {
+        (0, _auth.fetchSignInMethodsForEmail)(auth, error.customData.email).then(methods => {
           setError("Please use another sign-in method: " + methods[0]);
         }).catch(error => {
           setError(error.message);
@@ -97,20 +107,20 @@ export const SignIn = _ref => {
       setProcessing(false);
     });
   };
-  return /*#__PURE__*/React.createElement(Container, {
+  return /*#__PURE__*/_react.default.createElement(_material.Container, {
     component: "main",
     maxWidth: "s"
-  }, /*#__PURE__*/React.createElement(SetPageTitle, {
+  }, /*#__PURE__*/_react.default.createElement(_SetPageTitle.SetPageTitle, {
     title: title
-  }), /*#__PURE__*/React.createElement(Box, null, logo, /*#__PURE__*/React.createElement(Typography, {
+  }), /*#__PURE__*/_react.default.createElement(_material.Box, null, logo, /*#__PURE__*/_react.default.createElement(_material.Typography, {
     component: "h1",
     variant: "h5"
-  }, title)), /*#__PURE__*/React.createElement(Box, null, /*#__PURE__*/React.createElement(Stack, {
+  }, title)), /*#__PURE__*/_react.default.createElement(_material.Box, null, /*#__PURE__*/_react.default.createElement(_material.Stack, {
     spacing: 2,
     mt: 2
-  }, error !== null && /*#__PURE__*/React.createElement(Alert, {
+  }, error !== null && /*#__PURE__*/_react.default.createElement(_material.Alert, {
     severity: "error"
-  }, error), /*#__PURE__*/React.createElement(TextField, {
+  }, error), /*#__PURE__*/_react.default.createElement(_material.TextField, {
     required: true,
     fullWidth: true,
     name: "email",
@@ -119,7 +129,7 @@ export const SignIn = _ref => {
     autoComplete: "email",
     margin: "normal",
     onChange: e => setEmail(e.target.value)
-  }), /*#__PURE__*/React.createElement(TextField, {
+  }), /*#__PURE__*/_react.default.createElement(_material.TextField, {
     required: true,
     fullWidth: true,
     name: "password",
@@ -128,18 +138,18 @@ export const SignIn = _ref => {
     autoComplete: "current-password",
     margin: "normal",
     onChange: e => setPassword(e.target.value)
-  }), /*#__PURE__*/React.createElement(Button, {
+  }), /*#__PURE__*/_react.default.createElement(_material.Button, {
     type: "button",
     fullWidth: true,
     variant: "contained",
     size: "large",
-    startIcon: /*#__PURE__*/React.createElement(EmailIcon, null),
+    startIcon: /*#__PURE__*/_react.default.createElement(_Email.default, null),
     disabled: processing,
     onClick: () => {
       setError(null);
       setProcessing(true);
-      const auth = getAuth();
-      signInWithEmailAndPassword(auth, email, password).then(result => {
+      const auth = (0, _auth.getAuth)();
+      (0, _auth.signInWithEmailAndPassword)(auth, email, password).then(result => {
         const user = result.user;
         setAuthUser(prevState => _objectSpread(_objectSpread({}, prevState), {}, {
           user: {
@@ -174,48 +184,48 @@ export const SignIn = _ref => {
         setProcessing(false);
       });
     }
-  }, /*#__PURE__*/React.createElement(Typography, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Typography, {
     component: "span",
     style: {
       width: "".concat(btWidth)
     }
-  }, "Sign In With Email")), (signUpUrl || resetPasswordUrl) && /*#__PURE__*/React.createElement(Grid, {
+  }, "Sign In With Email")), (signUpUrl || resetPasswordUrl) && /*#__PURE__*/_react.default.createElement(_material.Grid, {
     container: true
-  }, signUpUrl && /*#__PURE__*/React.createElement(Grid, {
+  }, signUpUrl && /*#__PURE__*/_react.default.createElement(_material.Grid, {
     item: true,
     xs: true,
     textAlign: "left"
-  }, /*#__PURE__*/React.createElement(Link, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Link, {
     to: signUpUrl,
-    component: RouterLink
-  }, "Sign up a new account")), resetPasswordUrl && /*#__PURE__*/React.createElement(Grid, {
+    component: _reactRouterDom.Link
+  }, "Sign up a new account")), resetPasswordUrl && /*#__PURE__*/_react.default.createElement(_material.Grid, {
     item: true,
     textAlign: "left"
-  }, /*#__PURE__*/React.createElement(Link, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Link, {
     to: resetPasswordUrl,
-    component: RouterLink
-  }, "Reset password"))), providers && /*#__PURE__*/React.createElement(Typography, null, "OR"), providers && providers.google && /*#__PURE__*/React.createElement(Button, {
+    component: _reactRouterDom.Link
+  }, "Reset password"))), providers && /*#__PURE__*/_react.default.createElement(_material.Typography, null, "OR"), providers && providers.google && /*#__PURE__*/_react.default.createElement(_material.Button, {
     type: "button",
     fullWidth: true,
     variant: "outlined",
-    startIcon: /*#__PURE__*/React.createElement("img", {
-      src: googleSvg,
+    startIcon: /*#__PURE__*/_react.default.createElement("img", {
+      src: _google.default,
       width: "16",
       alt: "Google"
     }),
     size: "large",
     onClick: () => singleSignOn("google"),
     disabled: processing
-  }, /*#__PURE__*/React.createElement(Typography, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Typography, {
     component: "span",
     style: {
       width: "".concat(btWidth)
     }
-  }, "Sign In With Google")), providers && providers.facebook && /*#__PURE__*/React.createElement(Button, {
+  }, "Sign In With Google")), providers && providers.facebook && /*#__PURE__*/_react.default.createElement(_material.Button, {
     type: "button",
     fullWidth: true,
     variant: "outlined",
-    startIcon: /*#__PURE__*/React.createElement(FacebookIcon, {
+    startIcon: /*#__PURE__*/_react.default.createElement(_Facebook.default, {
       style: {
         color: "#4267B2"
       }
@@ -223,33 +233,33 @@ export const SignIn = _ref => {
     size: "large",
     onClick: () => singleSignOn("facebook"),
     disabled: processing
-  }, /*#__PURE__*/React.createElement(Typography, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Typography, {
     component: "span",
     style: {
       width: "".concat(btWidth)
     }
-  }, "Sign In With Facebook")), providers && providers.microsoft && /*#__PURE__*/React.createElement(Button, {
+  }, "Sign In With Facebook")), providers && providers.microsoft && /*#__PURE__*/_react.default.createElement(_material.Button, {
     type: "button",
     fullWidth: true,
     variant: "outlined",
-    startIcon: /*#__PURE__*/React.createElement("img", {
-      src: microsoftSvg,
+    startIcon: /*#__PURE__*/_react.default.createElement("img", {
+      src: _microsoft.default,
       width: "16",
       alt: "Microsoft"
     }),
     size: "large",
     onClick: () => singleSignOn("microsoft"),
     disabled: processing
-  }, /*#__PURE__*/React.createElement(Typography, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Typography, {
     component: "span",
     style: {
       width: "".concat(btWidth)
     }
-  }, "Sign In With Microsoft")), providers && providers.apple && /*#__PURE__*/React.createElement(Button, {
+  }, "Sign In With Microsoft")), providers && providers.apple && /*#__PURE__*/_react.default.createElement(_material.Button, {
     type: "button",
     fullWidth: true,
     variant: "outlined",
-    startIcon: /*#__PURE__*/React.createElement(AppleIcon, {
+    startIcon: /*#__PURE__*/_react.default.createElement(_Apple.default, {
       style: {
         color: "#555555"
       }
@@ -257,16 +267,16 @@ export const SignIn = _ref => {
     size: "large",
     onClick: () => singleSignOn("apple"),
     disabled: processing
-  }, /*#__PURE__*/React.createElement(Typography, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Typography, {
     component: "span",
     style: {
       width: "".concat(btWidth)
     }
-  }, "Sign In With Apple")), providers && providers.twitter && /*#__PURE__*/React.createElement(Button, {
+  }, "Sign In With Apple")), providers && providers.twitter && /*#__PURE__*/_react.default.createElement(_material.Button, {
     type: "button",
     fullWidth: true,
     variant: "outlined",
-    startIcon: /*#__PURE__*/React.createElement(TwitterIcon, {
+    startIcon: /*#__PURE__*/_react.default.createElement(_Twitter.default, {
       style: {
         color: "#1DA1F2"
       }
@@ -274,16 +284,16 @@ export const SignIn = _ref => {
     size: "large",
     onClick: () => singleSignOn("twitter"),
     disabled: processing
-  }, /*#__PURE__*/React.createElement(Typography, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Typography, {
     component: "span",
     style: {
       width: "".concat(btWidth)
     }
-  }, "Sign In With Twitter")), providers && providers.github && /*#__PURE__*/React.createElement(Button, {
+  }, "Sign In With Twitter")), providers && providers.github && /*#__PURE__*/_react.default.createElement(_material.Button, {
     type: "button",
     fullWidth: true,
     variant: "outlined",
-    startIcon: /*#__PURE__*/React.createElement(GitHubIcon, {
+    startIcon: /*#__PURE__*/_react.default.createElement(_GitHub.default, {
       style: {
         color: "#000000"
       }
@@ -291,10 +301,11 @@ export const SignIn = _ref => {
     size: "large",
     onClick: () => singleSignOn("github"),
     disabled: processing
-  }, /*#__PURE__*/React.createElement(Typography, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Typography, {
     component: "span",
     style: {
       width: "".concat(btWidth)
     }
   }, "Sign In With Github")))));
 };
+exports.SignIn = SignIn;

@@ -1,38 +1,47 @@
-import "core-js/modules/web.dom-collections.iterator.js";
-import { Alert, Box, Button, Container, Grid, Paper, TextField, Typography } from "@mui/material";
-import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { SetPageTitle } from "../SetPageTitle";
-import { deleteUser, getAuth } from "firebase/auth";
-import { FireactContext } from "../Fireact";
-export const UserDelete = () => {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState(null);
-  const [processing, setProcessing] = useState(false);
+"use strict";
+
+require("core-js/modules/es.weak-map.js");
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.UserDelete = void 0;
+require("core-js/modules/web.dom-collections.iterator.js");
+var _material = require("@mui/material");
+var _react = _interopRequireWildcard(require("react"));
+var _reactRouterDom = require("react-router-dom");
+var _SetPageTitle = require("../SetPageTitle");
+var _auth = require("firebase/auth");
+var _Fireact = require("../Fireact");
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+const UserDelete = () => {
+  const [email, setEmail] = (0, _react.useState)("");
+  const [error, setError] = (0, _react.useState)(null);
+  const [processing, setProcessing] = (0, _react.useState)(false);
   const title = "Delete Account";
-  const navigate = useNavigate();
-  const auth = getAuth();
+  const navigate = (0, _reactRouterDom.useNavigate)();
+  const auth = (0, _auth.getAuth)();
   const {
     config
-  } = useContext(FireactContext);
+  } = (0, _react.useContext)(_Fireact.FireactContext);
   const pathnames = config.pathnames;
-  return /*#__PURE__*/React.createElement(Container, {
+  return /*#__PURE__*/_react.default.createElement(_material.Container, {
     maxWidth: "md"
-  }, /*#__PURE__*/React.createElement(SetPageTitle, {
+  }, /*#__PURE__*/_react.default.createElement(_SetPageTitle.SetPageTitle, {
     title: title
-  }), /*#__PURE__*/React.createElement(Paper, null, /*#__PURE__*/React.createElement(Box, {
+  }), /*#__PURE__*/_react.default.createElement(_material.Paper, null, /*#__PURE__*/_react.default.createElement(_material.Box, {
     p: 2
-  }, /*#__PURE__*/React.createElement(Typography, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Typography, {
     component: "h1",
     variant: "h4",
     align: "center"
-  }, title)), error !== null && /*#__PURE__*/React.createElement(Box, {
+  }, title)), error !== null && /*#__PURE__*/_react.default.createElement(_material.Box, {
     p: 2
-  }, /*#__PURE__*/React.createElement(Alert, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Alert, {
     severity: "error"
-  }, error)), /*#__PURE__*/React.createElement(Box, {
+  }, error)), /*#__PURE__*/_react.default.createElement(_material.Box, {
     p: 2
-  }, /*#__PURE__*/React.createElement(Typography, null, "Please confirm your email address to delete your user account."), /*#__PURE__*/React.createElement(TextField, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Typography, null, "Please confirm your email address to delete your user account."), /*#__PURE__*/_react.default.createElement(_material.TextField, {
     required: true,
     fullWidth: true,
     name: "email",
@@ -41,14 +50,14 @@ export const UserDelete = () => {
     autoComplete: "email",
     margin: "normal",
     onChange: e => setEmail(e.target.value)
-  })), /*#__PURE__*/React.createElement(Box, {
+  })), /*#__PURE__*/_react.default.createElement(_material.Box, {
     p: 2
-  }, /*#__PURE__*/React.createElement(Grid, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Grid, {
     container: true
-  }, /*#__PURE__*/React.createElement(Grid, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Grid, {
     item: true,
     xs: true
-  }, /*#__PURE__*/React.createElement(Button, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Button, {
     type: "button",
     color: "secondary",
     variant: "outlined",
@@ -56,9 +65,9 @@ export const UserDelete = () => {
     onClick: () => {
       navigate(pathnames.UserProfile);
     }
-  }, "Back")), /*#__PURE__*/React.createElement(Grid, {
+  }, "Back")), /*#__PURE__*/_react.default.createElement(_material.Grid, {
     item: true
-  }, /*#__PURE__*/React.createElement(Button, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Button, {
     type: "button",
     color: "error",
     variant: "contained",
@@ -70,7 +79,7 @@ export const UserDelete = () => {
         setError("The email address does not match with your email address.");
         setProcessing(false);
       } else {
-        deleteUser(auth.currentUser).then(() => {
+        (0, _auth.deleteUser)(auth.currentUser).then(() => {
           // refresh page
           document.location.href = "/";
         }).catch(error => {
@@ -88,3 +97,4 @@ export const UserDelete = () => {
     }
   }, "Delete User Account"))))));
 };
+exports.UserDelete = UserDelete;

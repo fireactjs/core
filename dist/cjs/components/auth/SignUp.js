@@ -1,43 +1,52 @@
-import "core-js/modules/web.dom-collections.iterator.js";
-import "core-js/modules/es.string.trim.js";
-import "core-js/modules/es.regexp.exec.js";
-import "core-js/modules/es.regexp.test.js";
-import React, { useContext, useState } from "react";
-import { Alert, Button, Box, Stack, TextField, Typography, Grid, Link } from "@mui/material";
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { Link as RouterLink } from "react-router-dom";
-import { SetPageTitle } from "../SetPageTitle";
-import { FireactContext } from "../Fireact";
-export const SignUp = _ref => {
+"use strict";
+
+require("core-js/modules/es.weak-map.js");
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.SignUp = void 0;
+require("core-js/modules/web.dom-collections.iterator.js");
+require("core-js/modules/es.string.trim.js");
+require("core-js/modules/es.regexp.exec.js");
+require("core-js/modules/es.regexp.test.js");
+var _react = _interopRequireWildcard(require("react"));
+var _material = require("@mui/material");
+var _auth = require("firebase/auth");
+var _reactRouterDom = require("react-router-dom");
+var _SetPageTitle = require("../SetPageTitle");
+var _Fireact = require("../Fireact");
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+const SignUp = _ref => {
   let {
     logo,
     successUrl
   } = _ref;
   const {
     config
-  } = useContext(FireactContext);
+  } = (0, _react.useContext)(_Fireact.FireactContext);
   const pathnames = config.pathnames;
   const title = "Sign Up";
   const signInUrl = pathnames.SignIn;
   const resetPasswordUrl = pathnames.ResetPassword;
   const re = successUrl || "/"; // redirect successUrl or homepage after sign in
 
-  const [error, setError] = useState(null);
-  const [processing, setProcessing] = useState(false);
-  const [email, setEmail] = useState("");
-  const [fullname, setFullname] = useState("");
-  const [password, setPassword] = useState("");
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Box, null, /*#__PURE__*/React.createElement(SetPageTitle, {
+  const [error, setError] = (0, _react.useState)(null);
+  const [processing, setProcessing] = (0, _react.useState)(false);
+  const [email, setEmail] = (0, _react.useState)("");
+  const [fullname, setFullname] = (0, _react.useState)("");
+  const [password, setPassword] = (0, _react.useState)("");
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_material.Box, null, /*#__PURE__*/_react.default.createElement(_SetPageTitle.SetPageTitle, {
     title: title
-  }), logo, /*#__PURE__*/React.createElement(Typography, {
+  }), logo, /*#__PURE__*/_react.default.createElement(_material.Typography, {
     component: "h1",
     variant: "h5"
-  }, title)), /*#__PURE__*/React.createElement(Box, null, /*#__PURE__*/React.createElement(Stack, {
+  }, title)), /*#__PURE__*/_react.default.createElement(_material.Box, null, /*#__PURE__*/_react.default.createElement(_material.Stack, {
     spacing: 2,
     mt: 2
-  }, error !== null && /*#__PURE__*/React.createElement(Alert, {
+  }, error !== null && /*#__PURE__*/_react.default.createElement(_material.Alert, {
     severity: "error"
-  }, error), /*#__PURE__*/React.createElement(TextField, {
+  }, error), /*#__PURE__*/_react.default.createElement(_material.TextField, {
     required: true,
     fullWidth: true,
     name: "email",
@@ -46,7 +55,7 @@ export const SignUp = _ref => {
     autoComplete: "email",
     margin: "normal",
     onChange: e => setEmail(e.target.value)
-  }), /*#__PURE__*/React.createElement(TextField, {
+  }), /*#__PURE__*/_react.default.createElement(_material.TextField, {
     required: true,
     fullWidth: true,
     name: "fullname",
@@ -55,7 +64,7 @@ export const SignUp = _ref => {
     type: "text",
     margin: "normal",
     onChange: e => setFullname(e.target.value)
-  }), /*#__PURE__*/React.createElement(TextField, {
+  }), /*#__PURE__*/_react.default.createElement(_material.TextField, {
     required: true,
     fullWidth: true,
     name: "password",
@@ -64,7 +73,7 @@ export const SignUp = _ref => {
     type: "password",
     margin: "normal",
     onChange: e => setPassword(e.target.value)
-  }), /*#__PURE__*/React.createElement(Button, {
+  }), /*#__PURE__*/_react.default.createElement(_material.Button, {
     type: "button",
     fullWidth: true,
     variant: "contained",
@@ -84,9 +93,9 @@ export const SignUp = _ref => {
         setError('The password must contain at least 8 characters with letters (both uppercase and lowercase), numbers, and symbols.');
         setProcessing(false);
       } else {
-        const auth = getAuth();
-        createUserWithEmailAndPassword(auth, email, password).then(result => {
-          return updateProfile(result.user, {
+        const auth = (0, _auth.getAuth)();
+        (0, _auth.createUserWithEmailAndPassword)(auth, email, password).then(result => {
+          return (0, _auth.updateProfile)(result.user, {
             displayName: fullname
           });
         }).then(() => {
@@ -110,20 +119,21 @@ export const SignUp = _ref => {
         });
       }
     }
-  }, "Sign Up"), (signInUrl || resetPasswordUrl) && /*#__PURE__*/React.createElement(Grid, {
+  }, "Sign Up"), (signInUrl || resetPasswordUrl) && /*#__PURE__*/_react.default.createElement(_material.Grid, {
     container: true
-  }, signInUrl && /*#__PURE__*/React.createElement(Grid, {
+  }, signInUrl && /*#__PURE__*/_react.default.createElement(_material.Grid, {
     item: true,
     xs: true,
     textAlign: "left"
-  }, /*#__PURE__*/React.createElement(Link, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Link, {
     to: signInUrl,
-    component: RouterLink
-  }, "Sign in with an existing account")), resetPasswordUrl && /*#__PURE__*/React.createElement(Grid, {
+    component: _reactRouterDom.Link
+  }, "Sign in with an existing account")), resetPasswordUrl && /*#__PURE__*/_react.default.createElement(_material.Grid, {
     item: true,
     textAlign: "left"
-  }, /*#__PURE__*/React.createElement(Link, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Link, {
     to: resetPasswordUrl,
-    component: RouterLink
+    component: _reactRouterDom.Link
   }, "Reset password"))))));
 };
+exports.SignUp = SignUp;
