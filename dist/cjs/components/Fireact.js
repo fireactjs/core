@@ -6,8 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.FireactProvider = exports.FireactContext = void 0;
 var _react = _interopRequireDefault(require("react"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-const FireactContext = /*#__PURE__*/_react.default.createContext();
-exports.FireactContext = FireactContext;
+const FireactContext = exports.FireactContext = /*#__PURE__*/_react.default.createContext();
 const FireactProvider = _ref => {
   let {
     config,
